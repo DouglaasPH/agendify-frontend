@@ -1,143 +1,196 @@
-# 🗓️ Agendify
+# 🗓️ Agendify — Frontend
 
-O **Agendify** é um sistema de agendamento desenvolvido para profissionais autônomos que desejam organizar horários, gerenciar clientes e controlar sua disponibilidade de forma prática e moderna. O projeto oferece um fluxo completo de autenticação, gerenciamento de agenda e interação entre cliente e profissional, incluindo um chat para agendamentos.
-
----
-
-## 🚀 Tecnologias Utilizadas
-
-### **Frontend**
-
-- React
-- TypeScript
-- Redux Toolkit
-- Axios
-- Tailwind CSS
-- Shadcn/UI
-- Radix UI
-- Lucide React
-
-### **Backend**
-
-- FastAPI (Python)
-- Uvicorn
-- SQLAlchemy
-- Alembic
-- JWT Authentication
-- Python-jose (criptografia)
-- Fastapi-Mail (envios de email)
-- Jinja2
-- SQLite (desenvolvimento)
-- `pyproject.toml` para gerenciamento de dependências (Poetry)
+**Agendify** is an intelligent scheduling system for self-employed professionals, enabling interaction between clients and service providers in a simple and automated way.
+This part of the project corresponds to the **frontend**, developed in **React**, focusing on performance, componentization, and integration with the FastAPI backend.
 
 ---
 
-## ✅ Funcionalidades Principais
+## 🚀 Main Technologies
 
-### 👤 Autenticação e Usuários
-
-- Registro de conta com fluxo completo e com envio de email
-- Login com **access_token** e **refresh_token** e com envio de email
-- Edição de perfil
-- Alteração de e-mail e com envio de email
-- Fluxo de recuperação de senha (Forgot/Reset) e com envio de email
-
----
-
-### 📅 Disponibilidade
-
-- Criar horários de disponibilidade
-- Cancelar horários
-- Visualização/Gerenciamento pelo profissional
+| Technology                     | Usage                                                |
+| ------------------------------ | ---------------------------------------------------- |
+| **React.js (Vite)**            | Base framework for building the interface            |
+| **TypeScript**                 | Static typing and code safety                        |
+| **React Router DOM**           | Management of public and private routes              |
+| **Axios**                      | Communication with the backend API                   |
+| **Shadcn/UI + Tailwind CSS**   | Styling and reusable components                      |
+| **React Hook Form + Zod**      | Form validation and control                          |
+| **Context API / Custom Hooks** | Authentication and global state management           |
+| **Framer Motion**              | Smooth animations in components and page transitions |
 
 ---
 
-### 🗓️ Agendamentos
+## 📁 Folder Structure
 
-- Cliente pode agendar, desmarcar e visualizar seus agendamentos
-- Profissional pode visualizar e gerenciar os agendamentos de todos seus clientes
-- Regras de validação e prevenção de conflitos
+```bash
+src/
+├── assets/                # Icons, images, and fonts
+├── components/            # Reusable components (buttons, inputs, etc.)
+├── layouts/               # Standard layouts (DashboardLayout, AuthLayout)
+├── css/                   # Complementary styles and Tailwind customizations
+├── feature/               # Access logic and route verification (e.g., logged-in user)
+├── lib/                   # Utility functions (formatters, helpers, validations)
+├── pages/                 # Application pages (Login, Dashboard, Appointments, etc.)
+├── store.ts               # Global Redux Toolkit configuration
+├── index.css              # Main Tailwind CSS stylesheet
+└── main.tsx               # Application entry point
+```
 
 ---
 
-### 💬 Chat Interativo
+## 🔑 Authentication and Route Protection
 
-- Agendamento
-- Desmarcação
-- Visualização de horários
-- Experiência simples e intuitiva para o cliente
-- chat exclusivo para cada profissional, com base no código de chat
+- Authentication is managed by **AuthContext** (`src/contexts/AuthContext.tsx`).
+- JWT tokens are securely stored (sessionStorage/localStorage).
+- Protected routes use the **`<PrivateRoute />`** component (`src/auth/PrivateRoute.tsx`), which redirects unauthenticated users to the login screen.
+
+Example:
+
+```tsx
+<Route
+  path="/dashboard"
+  element={
+    <PrivateRoute>
+      <Dashboard />
+    </PrivateRoute>
+  }
+/>
+```
 
 ---
 
-### 📊 Painel de Métricas
+## 🔄 Backend Communication
 
-- Visão geral dos agendamentos
-- Indicadores úteis para o profissional
+- All HTTP requests use **Axios**, configured in `src/services/api.ts`.
+- Interceptors automatically attach the JWT token.
+- Main routes include:
 
----
-
-# 📂 Como Executar o Projeto
-
-## ✅ Backend (FastAPI)
-
-1. Entre na pasta do backend:
-
-```
-cd backend
-```
-
-2. Instale as dependências via Poetry (pois existe um `pyproject.toml`):
-
-```
-poetry install
-```
-
-3. Ative o ambiente virtual do Poetry:
-
-```
-poetry shell
-```
-
-4. Execute o servidor:
-
-```
-uvicorn app.main:app --reload
-```
-
-API disponível em:
-👉 [http://localhost:8000](http://localhost:8000)
+  - `POST /login` — authentication
+  - `POST /agendar/` — scheduling chat
+  - `POST /agendamentos/confirmar` — appointment confirmation
+  - `GET /agendamentos/` — listing with filters
 
 ---
 
-## ✅ Frontend (React + Vite)
+## 🧩 Typing
 
-1. Entre na pasta do frontend:
+- All reusable types (e.g., `User`, `Appointment`, `ApiResponse`) are located in `src/types/`.
+- Local and specific types are defined within the respective component.
 
-```
-cd frontend
-```
+---
 
-2. Instale as dependências:
+## 🎨 UI and Styling
 
-```
+- **Tailwind CSS** provides the foundation for fast and responsive styling.
+- **Shadcn/UI** is used for accessible and customizable components (modals, buttons, cards).
+- **Framer Motion** adds micro-animations to screen transitions and interactive elements.
+
+---
+
+## 🧠 Coding Best Practices
+
+- Components are **functional and reusable**.
+- Imports follow the `@/` pattern set in `tsconfig.json` (`baseUrl: "./src"`).
+- Shared types and helper functions are kept separate from UI logic.
+
+---
+
+## ⚙️ Setup and Execution
+
+### 🧩 Install dependencies
+
+```bash
 npm install
 ```
 
-3. Execute o projeto:
+### ▶️ Run in development mode
 
-```
+```bash
 npm run dev
 ```
 
-Frontend disponível em:
-👉 [http://localhost:5173](http://localhost:5173)
+### 🏗️ Build for production
+
+```bash
+npm run build
+```
+
+### 🔍 Lint and formatting
+
+```bash
+npm run lint
+npm run format
+```
 
 ---
 
-## 📩 Contato
+## 🧪 Tests (optional / future implementation)
 
-Criado por **Douglas Phelipe**
+- The project is prepared for testing with **Vitest** and **React Testing Library**.
+- Future tests will cover:
 
-- GitHub: [https://github.com/DouglaasPH](https://github.com/DouglaasPH)
-- LinkedIn: [https://www.linkedin.com/in/douglas-phelipe/](https://www.linkedin.com/in/douglas-phelipe/)
+  - Authentication hooks
+  - API requests
+  - Critical components (forms, scheduling modal)
+
+---
+
+## 📦 Main Dependencies
+
+```json
+"dependencies": {
+  "react": "^19.x",
+  "react-dom": "^19.x",
+  "react-router-dom": "^7.x",
+  "@reduxjs/toolkit": "^2.x",
+  "react-redux": "^9.x",
+  "axios": "^1.x",
+  "tailwindcss": "^4.x",
+  "@tailwindcss/vite": "^4.x",
+  "lucide-react": "^0.5.x",
+  "@radix-ui/react-dialog": "^1.x",
+  "@radix-ui/react-alert-dialog": "^1.x",
+  "@radix-ui/react-checkbox": "^1.x",
+  "@radix-ui/react-select": "^2.x",
+  "@radix-ui/react-popover": "^1.x",
+  "embla-carousel-react": "^8.x",
+  "recharts": "^3.x",
+  "date-fns": "^4.x",
+  "motion": "^12.x",
+  "next-themes": "^0.4.x",
+  "class-variance-authority": "^0.7.x",
+  "clsx": "^2.x",
+  "tailwind-merge": "^3.x",
+  "sonner": "^2.x"
+}
+```
+
+---
+
+## 🧰 Development Dependencies
+
+```json
+"devDependencies": {
+  "vite": "^7.x",
+  "@vitejs/plugin-react": "^4.x",
+  "typescript": "^5.x",
+  "@types/react": "^19.x",
+  "@types/react-dom": "^19.x",
+  "@types/node": "^24.x",
+  "eslint": "^9.x",
+  "@eslint/js": "^9.x",
+  "typescript-eslint": "^8.x",
+  "autoprefixer": "^10.x",
+  "postcss": "^8.x",
+  "tw-animate-css": "^1.x"
+}
+```
+
+---
+
+## 👨‍💻 Author
+
+**Douglas Phelipe**
+Aspiring Fullstack & Cloud Developer
+📍 Pernambuco, Brazil
+🔗 [LinkedIn](https://linkedin.com/in/douglas-phelipe)

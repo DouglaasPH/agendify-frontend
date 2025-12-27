@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch } from "react-redux";
-import { updateAcceptedTermsOfUse } from "../../../features/auth/registerSlice";
+import { update_data as update_data_for_register_professional } from "@/slices_of_redux/professional/register_professional_slice";
 
 // shadcn/ui
 import { Button } from "@/components/ui/button";
@@ -23,8 +23,10 @@ function AcceptTermsSectionComponent() {
 
   const [firstCheckbox, setFirstCheckbox] = useState(false);
 
-  const handleAccepted = () => {
-    dispatch(updateAcceptedTermsOfUse({ acceptedTermsOfUse: true }));
+  const handle_accepted = () => {
+    dispatch(
+      update_data_for_register_professional({ accepted_terms_of_use: true })
+    );
     navigate("/register/choose-your-avatar");
   };
 
@@ -75,7 +77,7 @@ function AcceptTermsSectionComponent() {
                 variant="default"
                 disabled={!firstCheckbox}
                 className="h-7 text-[12px] flex flex-row items-center gap-1 cursor-pointer"
-                onClick={() => handleAccepted()}
+                onClick={() => handle_accepted()}
               >
                 Accept & Continue
               </Button>

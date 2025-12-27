@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import LoadingType from "@/components/loading/loadingType";
-import { registerApi } from "@/services/authApi";
+import { request_to_register_professional } from "@/services/professional_request";
 
 function CheckEmailDuringRegistrationPage() {
   const { token } = useParams<{ token: string }>();
@@ -27,7 +27,7 @@ function CheckEmailDuringRegistrationPage() {
 
     const api = async () => {
       try {
-        await registerApi(token);
+        await request_to_register_professional(token);
         setStatus(0);
       } catch (error) {
         setStatus(1);

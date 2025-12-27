@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // redux slice
-import { updateRegister } from "../../features/auth/registerSlice";
-import { checkEmailApi } from "../../services/authApi";
+import { request_to_check_email_of_professional } from "../../services/professional_request";
+import { update_data as update_data_to_register_professional } from "@/slices_of_redux/professional/register_professional_slice";
 
 // shadcn/ui
 import { Button } from "@/components/ui/button";
@@ -31,138 +31,141 @@ import {
 import { motion } from "motion/react";
 
 // utils
-import { goToErrorPage, handleValidateEmail } from "@/lib/utils";
+import { go_to_error_page, handle_validate_email } from "@/lib/utils";
+
+interface Validate {
+  name: null | boolean;
+  email: null | boolean;
+  phone_number: null | boolean;
+  profession: null | boolean;
+  password: null | boolean;
+}
 
 function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [profession, setProfession] = useState("");
-  const [password, setPassword] = useState("");
+  const [professional, setProfessional] = useState({
+    name: "",
+    email: "",
+    phone_number: "",
+    profession: "",
+    password: "",
+  });
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [validateName, setValidateName] = useState<null | boolean>(null);
-  const [validateEmail, setValidateEmail] = useState<null | boolean>(null);
-  const [validatePhoneNumber, setValidatePhoneNumber] = useState<
-    null | boolean
-  >(null);
-  const [validateConfirmationPassword, setValidateConfirmationPassword] =
-    useState<null | boolean>(null);
-  const [validateProfession, setValidateProfession] = useState<null | boolean>(
-    null
-  );
+  const [validateData, setValidateData] = useState<Validate>({
+    name: null,
+    email: null,
+    phone_number: null,
+    profession: null,
+    password: null,
+  });
   const [emailExists, SetEmailExists] = useState<null | boolean>(null);
 
-  const handleValidateName = () => {
+  const handle_change_professional_data = (
+    prop: keyof typeof professional,
+    value: string
+  ) => {
+    setProfessional((prev) => ({
+      ...prev,
+      [prop]: value,
+    }));
+  };
+
+  const handle_change_professional_validation = (
+    prop: keyof typeof validateData,
+    value: null | boolean
+  ) => {
+    setValidateData((prev) => ({
+      ...prev,
+      [prop]: value,
+    }));
+  };
+
+  const handle_validate_data = (data_type: keyof typeof validateData) => {
     let state = false;
 
-    if (fullName !== "") {
-      state = true;
+    switch (data_type) {
+      case "name":
+        state = professional.name !== "";
+        break;
+      case "phone_number":
+        state = professional.phone_number.length === 18;
+        break;
+      case "profession":
+        state = professional.profession !== "";
+        break;
+      case "password":
+        state = professional.password == confirmPassword;
+        break;
+      case "email":
+        state = handle_validate_email(professional.email);
     }
 
-    setValidateName(state);
+    handle_change_professional_validation(data_type, state);
     return state;
   };
 
-  const handleValidatePhoneNumber = () => {
-    let state = false;
-
-    if (phoneNumber.length === 0) {
-      state = false;
-    } else if (phoneNumber.length === 18) {
-      state = true;
-    }
-
-    setValidatePhoneNumber(state);
-    return state;
-  };
-
-  const handleValidateProfession = () => {
-    let state = false;
-
-    if (profession !== "") {
-      state = true;
-    }
-
-    setValidateProfession(state);
-    return state;
-  };
-
-  const handleValidateConfirmationPassword = () => {
-    let state = false;
-
-    if (password == confirmPassword) {
-      state = true;
-    }
-
-    setValidateConfirmationPassword(state);
-    return state;
-  };
-
-  const handleInsertPhoneNumber = (caracter: string) => {
-    let newValue = "";
+  const handle_insert_phone_number = (caracter: string) => {
+    let new_phone_number = "";
     const typeCaracter = Number(caracter);
 
     if (caracter === "Backspace") {
-      if (phoneNumber.length == 2) {
-        newValue = "";
-      } else if (phoneNumber.length === 5 || phoneNumber.length === 9) {
-        newValue = phoneNumber.slice(0, -3);
-      } else if (phoneNumber.length === 14) {
-        newValue = phoneNumber.slice(0, -2);
+      if (professional.phone_number.length == 2) {
+        new_phone_number = "";
+      } else if (
+        professional.phone_number.length === 5 ||
+        professional.phone_number.length === 9
+      ) {
+        new_phone_number = professional.phone_number.slice(0, -3);
+      } else if (professional.phone_number.length === 14) {
+        new_phone_number = professional.phone_number.slice(0, -2);
       } else {
-        newValue = phoneNumber.slice(0, -1);
+        new_phone_number = professional.phone_number.slice(0, -1);
       }
     } else if (typeof typeCaracter === "number" && !isNaN(typeCaracter)) {
-      if (phoneNumber.length == 0) {
-        newValue = "+" + typeCaracter;
-      } else if (phoneNumber.length === 2) {
-        newValue = phoneNumber + typeCaracter + " (";
-      } else if (phoneNumber.length === 6) {
-        newValue = phoneNumber + typeCaracter + ") ";
-      } else if (phoneNumber.length === 12) {
-        newValue = phoneNumber + typeCaracter + "-";
-      } else if (phoneNumber.length === 18) {
-        newValue = phoneNumber.slice(0, -1) + typeCaracter;
+      if (professional.phone_number.length == 0) {
+        new_phone_number = "+" + typeCaracter;
+      } else if (professional.phone_number.length === 2) {
+        new_phone_number = professional.phone_number + typeCaracter + " (";
+      } else if (professional.phone_number.length === 6) {
+        new_phone_number = professional.phone_number + typeCaracter + ") ";
+      } else if (professional.phone_number.length === 12) {
+        new_phone_number = professional.phone_number + typeCaracter + "-";
+      } else if (professional.phone_number.length === 18) {
+        new_phone_number =
+          professional.phone_number.slice(0, -1) + typeCaracter;
       } else {
-        newValue = phoneNumber + typeCaracter;
+        new_phone_number = professional.phone_number + typeCaracter;
       }
     } else return;
 
-    setPhoneNumber(newValue);
+    handle_change_professional_data("phone_number", new_phone_number);
   };
 
   const handleRegister = async () => {
     if (
-      handleValidateName() &&
-      handleValidateEmail(email) &&
-      handleValidatePhoneNumber() &&
-      handleValidateProfession() &&
-      handleValidateConfirmationPassword()
+      handle_validate_data("name") &&
+      handle_validate_data("email") &&
+      handle_validate_data("phone_number") &&
+      handle_validate_data("profession") &&
+      handle_validate_data("password")
     ) {
-      setValidateEmail(true);
+      handle_change_professional_validation("email", true);
       try {
-        const response = await checkEmailApi(email);
-        if (!response.data.exists) {
-          dispatch(
-            updateRegister({
-              fullName,
-              email,
-              phoneNumber,
-              profession,
-              password,
-            })
-          );
+        const response = await request_to_check_email_of_professional(
+          professional.email
+        );
+        if (!response.exists) {
+          dispatch(update_data_to_register_professional(professional));
           navigate("accept-terms-of-use");
         } else {
           SetEmailExists(true);
         }
       } catch (error) {
-        goToErrorPage(error);
+        go_to_error_page(error);
       }
     } else {
-      setValidateEmail(false);
+      handle_change_professional_validation("email", false);
     }
   };
 
@@ -213,11 +216,13 @@ function RegisterPage() {
                       id="name"
                       type="name"
                       placeholder="Name"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
+                      value={professional.name}
+                      onChange={(e) =>
+                        handle_change_professional_data("name", e.target.value)
+                      }
                       required
                     />
-                    {validateName == false ? (
+                    {validateData.name == false ? (
                       <Label className="text-red-800">Add your name.</Label>
                     ) : null}
                   </div>
@@ -228,11 +233,16 @@ function RegisterPage() {
                         id="email"
                         type="email"
                         placeholder="m@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={professional.email}
+                        onChange={(e) =>
+                          handle_change_professional_data(
+                            "email",
+                            e.target.value
+                          )
+                        }
                         required
                       />
-                      {validateEmail == false ? (
+                      {validateData.email == false ? (
                         <Label className="text-red-800">Invalid email.</Label>
                       ) : null}
                     </div>
@@ -244,11 +254,11 @@ function RegisterPage() {
                         id="phoneNumber"
                         type="phoneNumber"
                         placeholder="+00 00 90000-0000"
-                        value={phoneNumber}
-                        onKeyDown={(e) => handleInsertPhoneNumber(e.key)}
+                        value={professional.phone_number}
+                        onKeyDown={(e) => handle_insert_phone_number(e.key)}
                         required
                       />
-                      {validatePhoneNumber == false ? (
+                      {validateData.phone_number == false ? (
                         <Label className="text-red-800">
                           Incomplete phone number.
                         </Label>
@@ -262,11 +272,16 @@ function RegisterPage() {
                         id="profession"
                         type="profession"
                         placeholder="Your profession"
-                        value={profession}
-                        onChange={(e) => setProfession(e.target.value)}
+                        value={professional.profession}
+                        onChange={(e) =>
+                          handle_change_professional_data(
+                            "profession",
+                            e.target.value
+                          )
+                        }
                         required
                       />
-                      {validateProfession == false ? (
+                      {validateData.profession == false ? (
                         <Label>Add your profession.</Label>
                       ) : null}
                     </div>
@@ -277,8 +292,13 @@ function RegisterPage() {
                     <Input
                       id="password"
                       type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={professional.password}
+                      onChange={(e) =>
+                        handle_change_professional_data(
+                          "password",
+                          e.target.value
+                        )
+                      }
                       required
                     />
                   </div>
@@ -292,7 +312,7 @@ function RegisterPage() {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
-                    {validateConfirmationPassword == false ? (
+                    {validateData.password == false ? (
                       <Label htmlFor="password" className="text-red-800">
                         Different passwords.
                       </Label>

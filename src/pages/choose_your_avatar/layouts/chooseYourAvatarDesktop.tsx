@@ -1,7 +1,3 @@
-// redux
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../store";
-
 //shadcn-ui
 import { Button } from "@/components/ui/button";
 
@@ -19,38 +15,21 @@ import { Badge } from "@/components/ui/badge";
 // motion
 import { AnimatePresence, motion } from "motion/react";
 
-// cartoonAvatars
-import cartoonAvatars from "../../../assets/cartoonAvatars";
+// all cartoon avatars
+import all_cartoon_avatars from "../../../assets/all_cartoon_avatars";
 
 // hooks
-import { useChooseAvatar } from "../hooks/useChooseAvatar";
-import { useEffect } from "react";
+import { useChooseAvatar } from "../utils/utils_for_choose_avatar";
+
+// type
+import type { ProfessionalData } from "../chooseYourAvatarPage";
 
 type Props = {
   mode: "register" | "updateAccount";
+  professional_data: ProfessionalData;
 };
 
-function ChooseYourAvatarDesktop({ mode }: Props) {
-  const user_data = useSelector((state: RootState) => {
-    if (mode == "register") {
-      return {
-        name: state.register.fullName,
-        email: state.register.email,
-        password: state.register.password,
-        profession: state.register.profession,
-        phoneNumber: state.register.phoneNumber,
-        profileAvatarId:
-          state.register.profileAvatarId !== null
-            ? state.register.profileAvatarId
-            : 0,
-      };
-    } else {
-      return {
-        profileAvatarId: state.userData.profileAvatarId,
-      };
-    }
-  });
-
+function ChooseYourAvatarDesktop({ mode, professional_data }: Props) {
   const {
     selectedAvatar,
     setSelectedAvatar,
@@ -58,18 +37,10 @@ function ChooseYourAvatarDesktop({ mode }: Props) {
     setCurrentSection,
     avatarLimiterDisplayedStart,
     avatarLimiterDisplayedEnd,
-    handleSaveToRegisterAccount,
-    handleUpdateAccount,
-    handleSurpriseMe,
-  } = useChooseAvatar(user_data);
-
-  useEffect(() => {
-    if (mode == "updateAccount") {
-      setSelectedAvatar(cartoonAvatars[user_data.profileAvatarId]);
-
-      if (user_data.profileAvatarId > 5) setCurrentSection(2);
-    }
-  }, []);
+    handle_save_to_register_account,
+    handle_update_account,
+    handle_surprise_me,
+  } = useChooseAvatar(professional_data);
 
   return (
     <div className="w-full grid grid-cols-[2fr_3fr] h-[100vh] max-h-screen overflow-y-auto">
@@ -164,7 +135,7 @@ function ChooseYourAvatarDesktop({ mode }: Props) {
           <Button
             variant="outline"
             className="text-sm flex flex-row items-center gap-2 w-full h-9 max-w-xs cursor-pointer"
-            onClick={() => handleSurpriseMe()}
+            onClick={() => handle_surprise_me()}
           >
             <Shuffle className="size-4" />
             Surprise Me!
@@ -174,8 +145,8 @@ function ChooseYourAvatarDesktop({ mode }: Props) {
             className="text-sm flex flex-row items-center gap-2 w-full h-9 max-w-xs cursor-pointer"
             onClick={() =>
               mode == "register"
-                ? handleSaveToRegisterAccount()
-                : handleUpdateAccount()
+                ? handle_save_to_register_account()
+                : handle_update_account()
             }
           >
             Continue Adventure
@@ -219,7 +190,7 @@ function ChooseYourAvatarDesktop({ mode }: Props) {
         </div>
 
         <div className="border-b-1 bg-gray-100 grid grid-cols-3 items-center gap-7 p-8">
-          {cartoonAvatars
+          {all_cartoon_avatars
             .slice(avatarLimiterDisplayedStart, avatarLimiterDisplayedEnd)
             .map((avatar, index) => (
               <motion.div
@@ -299,8 +270,8 @@ function ChooseYourAvatarDesktop({ mode }: Props) {
               className="cursor-pointer"
               onClick={() =>
                 mode == "register"
-                  ? handleSaveToRegisterAccount()
-                  : handleUpdateAccount()
+                  ? handle_save_to_register_account()
+                  : handle_update_account()
               }
             >
               Continue

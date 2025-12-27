@@ -1,7 +1,3 @@
-// redux
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../store";
-
 //shadcn-ui
 import { Button } from "@/components/ui/button";
 
@@ -19,36 +15,20 @@ import { Badge } from "@/components/ui/badge";
 import { AnimatePresence, motion } from "motion/react";
 
 // cartoonAvatars
-import cartoonAvatars from "../../../assets/cartoonAvatars";
+import all_cartoon_avatars from "../../../assets/all_cartoon_avatars";
 
 // hooks
-import { useChooseAvatar } from "../hooks/useChooseAvatar";
+import { useChooseAvatar } from "../utils/utils_for_choose_avatar";
+
+// type
+import type { ProfessionalData } from "../chooseYourAvatarPage";
 
 type Props = {
   mode: "register" | "updateAccount";
+  professional_data: ProfessionalData;
 };
 
-function ChooseYourAvatarMobile({ mode }: Props) {
-  const user_data = useSelector((state: RootState) => {
-    if (mode == "register") {
-      return {
-        name: state.register.fullName,
-        email: state.register.email,
-        password: state.register.password,
-        profession: state.register.profession,
-        phoneNumber: state.register.phoneNumber,
-        profileAvatarId:
-          state.register.profileAvatarId !== null
-            ? state.register.profileAvatarId
-            : 0,
-      };
-    } else {
-      return {
-        profileAvatarId: state.userData.profileAvatarId,
-      };
-    }
-  });
-
+function ChooseYourAvatarMobile({ mode, professional_data }: Props) {
   const {
     selectedAvatar,
     setSelectedAvatar,
@@ -56,10 +36,10 @@ function ChooseYourAvatarMobile({ mode }: Props) {
     setCurrentSection,
     avatarLimiterDisplayedStart,
     avatarLimiterDisplayedEnd,
-    handleSaveToRegisterAccount,
-    handleUpdateAccount,
-    handleSurpriseMe,
-  } = useChooseAvatar(user_data);
+    handle_save_to_register_account,
+    handle_update_account,
+    handle_surprise_me,
+  } = useChooseAvatar(professional_data);
   return (
     <div className="w-full grid grid-row-[1fr_3fr_1fr] h-[100vh] max-h-screen overflow-y-auto">
       <div className="bg-gray-50 flex flex-col justify-between items-center py-5 px-5 gap-5">
@@ -118,7 +98,7 @@ function ChooseYourAvatarMobile({ mode }: Props) {
 
       <div className="flex flex-col gap-5">
         <div className="bg-gray-100 grid grid-cols-2 items-center gap-5 p-4">
-          {cartoonAvatars
+          {all_cartoon_avatars
             .slice(avatarLimiterDisplayedStart, avatarLimiterDisplayedEnd)
             .map((avatar, index) => (
               <motion.div
@@ -210,7 +190,7 @@ function ChooseYourAvatarMobile({ mode }: Props) {
             <Button
               variant="outline"
               className="text-sm flex flex-row items-center w-4/9 gap-2 h-9 cursor-pointer"
-              onClick={() => handleSurpriseMe()}
+              onClick={() => handle_surprise_me()}
             >
               <Shuffle className="size-4" />
               Surprise Me!
@@ -220,8 +200,8 @@ function ChooseYourAvatarMobile({ mode }: Props) {
               className="text-sm flex flex-row items-center w-4/9 gap-2 h-9 cursor-pointer"
               onClick={() =>
                 mode == "register"
-                  ? handleSaveToRegisterAccount()
-                  : handleUpdateAccount()
+                  ? handle_save_to_register_account()
+                  : handle_update_account()
               }
             >
               Continue

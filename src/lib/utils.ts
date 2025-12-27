@@ -6,27 +6,27 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // examnple: October 16, 2025
-export function formatDate(dateToTransform: Date | string) {
-  const date = new Date(dateToTransform);
+export function format_date(date_to_transform: Date | string) {
+  const date = new Date(date_to_transform);
 
-  const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
+  const week_day = date.toLocaleDateString("en-US", { weekday: "long" });
 
-  const dateFormatted = date.toLocaleDateString("en-US", {
+  const date_formatted = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
   return {
-    weekday,
-    dateFormatted,
+    week_day,
+    date_formatted,
   };
 }
 
 // Thu, Oct 16
-export function formatDateShort(date: Date) {
-  const newDate = new Date(date);
-  const formatted = newDate.toLocaleDateString("en-US", {
+export function format_date_short(date: Date) {
+  const new_date = new Date(date);
+  const formatted = new_date.toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
@@ -34,8 +34,8 @@ export function formatDateShort(date: Date) {
   return formatted;
 }
 
-export function formatHours(hourToTransform: Date | string) {
-  const date = new Date(hourToTransform);
+export function format_hours(hour_to_transform: Date | string) {
+  const date = new Date(hour_to_transform);
 
   const time = date.toLocaleTimeString([], {
     hour: "2-digit",
@@ -46,7 +46,7 @@ export function formatHours(hourToTransform: Date | string) {
   return time;
 }
 
-// Função para medir semelhança entre duas strings (0 a 1)
+// Function to measure similarity between two strings (0 to 1)
 export function similarity(a: string, b: string): number {
   a = a.toLowerCase();
   b = b.toLowerCase();
@@ -54,11 +54,11 @@ export function similarity(a: string, b: string): number {
   const shorter = a.length > b.length ? b : a;
   const longerLength = longer.length;
   if (longerLength === 0) return 1.0;
-  return (longerLength - editDistance(longer, shorter)) / longerLength;
+  return (longerLength - edit_distance(longer, shorter)) / longerLength;
 }
 
-// Distância de Levenshtein (número de mudanças entre as strings)
-export function editDistance(a: string, b: string): number {
+// Levenshtein distance (number of changes between strings)
+export function edit_distance(a: string, b: string): number {
   const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
   for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
 
@@ -68,9 +68,9 @@ export function editDistance(a: string, b: string): number {
         b[i - 1] === a[j - 1]
           ? matrix[i - 1][j - 1]
           : Math.min(
-              matrix[i - 1][j - 1] + 1, // substituição
-              matrix[i][j - 1] + 1, // inserção
-              matrix[i - 1][j] + 1 // deleção
+              matrix[i - 1][j - 1] + 1, // replacement
+              matrix[i][j - 1] + 1, // insertion
+              matrix[i - 1][j] + 1 // deletion
             );
     }
   }
@@ -78,7 +78,7 @@ export function editDistance(a: string, b: string): number {
   return matrix[b.length][a.length];
 }
 
-export function handleValidateEmail(email: string) {
+export function handle_validate_email(email: string) {
   const regex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
   let state = false;
 
@@ -89,7 +89,7 @@ export function handleValidateEmail(email: string) {
   return state;
 }
 
-export function goToErrorPage(error: any) {
+export function go_to_error_page(error: any) {
   if (!error.response) {
     window.location.href = `/error/${503}`;
   } else {

@@ -1,4 +1,4 @@
-import type { Appointment } from "./appointment";
+import type { Appointment } from "./appointment_types";
 
 export interface Availability {
   id: number;

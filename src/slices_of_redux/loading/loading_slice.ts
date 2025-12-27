@@ -1,5 +1,3 @@
-// Slice do Redux (user, token, login, logout, etc.)
-
 import { createSlice } from "@reduxjs/toolkit";
 
 interface LoadingState {
@@ -10,15 +8,15 @@ const initialState: LoadingState = {
   loading: false,
 };
 
-const loadingSlice = createSlice({
+const loading_slice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    updateLoading: (state) => {
+    update_loading: (state) => {
       state.loading = !state.loading;
     },
   },
 });
 
-export const { updateLoading } = loadingSlice.actions;
-export default loadingSlice.reducer;
+export const { update_loading } = loading_slice.actions;
+export default loading_slice.reducer;

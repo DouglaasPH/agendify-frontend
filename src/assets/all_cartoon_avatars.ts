@@ -14,7 +14,7 @@ import {
   Zap,
 } from "lucide-react";
 
-const cartoonAvatars = [
+const all_cartoon_avatars = [
   {
     id: 0,
     character: "Sunny",
@@ -137,4 +137,4 @@ const cartoonAvatars = [
   },
 ];
 
-export default cartoonAvatars;
+export default all_cartoon_avatars;

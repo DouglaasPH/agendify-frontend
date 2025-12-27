@@ -2,7 +2,7 @@ export interface UserDataType {
   id: number;
   name: string;
   profession: string;
-  profileAvatarId: number;
+  profile_avatar_id: number;
 }
 
 export interface CustomerDataType {

@@ -3,50 +3,48 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface RegisterState {
-  fullName: string;
+  name: string;
   email: string;
-  phoneNumber: string;
+  phone_number: string;
   profession: string;
   password: string;
-  profileAvatarId: null | number;
-  acceptedTermsOfUse: boolean;
+  profile_avatar_id: null | number;
+  accepted_terms_of_use: boolean;
 }
 
 interface UpdateProfileAvatarIdState {
-  profileAvatarId: number;
+  profile_avatar_id: number;
 }
 
 interface UpdateAcceptedTermsOfUse {
-  acceptedTermsOfUse: boolean;
+  accepted_terms_of_use: boolean;
 }
 
 const initialState: RegisterState = {
-  fullName: "",
+  name: "",
   email: "",
-  phoneNumber: "",
+  phone_number: "",
   profession: "",
   password: "",
-  profileAvatarId: null,
-  acceptedTermsOfUse: false,
+  profile_avatar_id: null,
+  accepted_terms_of_use: false,
 };
 
-const registerSlice = createSlice({
-  name: "register",
+const register_professional_slice = createSlice({
+  name: "register_professional",
   initialState,
   reducers: {
-    updateRegister: (state, action: PayloadAction<Partial<RegisterState>>) => {
+    update_all_data: (state, action: PayloadAction<Partial<RegisterState>>) => {
       Object.assign(state, action.payload);
     },
-    resetRegister: (state) => {
-      Object.assign(state, initialState);
-    },
-    updateProfileAvatarId: (
+    reset: () => initialState,
+    update_profile_avatar_id: (
       state,
       action: PayloadAction<Partial<UpdateProfileAvatarIdState>>
     ) => {
       Object.assign(state, action.payload);
     },
-    updateAcceptedTermsOfUse: (
+    update_accepted_terms_of_use: (
       state,
       action: PayloadAction<Partial<UpdateAcceptedTermsOfUse>>
     ) => {
@@ -56,9 +54,9 @@ const registerSlice = createSlice({
 });
 
 export const {
-  updateRegister,
-  resetRegister,
-  updateProfileAvatarId,
-  updateAcceptedTermsOfUse,
-} = registerSlice.actions;
-export default registerSlice.reducer;
+  update_all_data,
+  reset,
+  update_profile_avatar_id,
+  update_accepted_terms_of_use,
+} = register_professional_slice.actions;
+export default register_professional_slice.reducer;

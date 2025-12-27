@@ -14,7 +14,10 @@ import { resetUserData, updateUserData } from "./features/auth/userDataSlice";
 import { updateLoading } from "./features/loadingSlice";
 
 // API
-import { getUserDataApi, refreshTokenApi } from "./services/authApi";
+import {
+  getUserDataApi,
+  refreshTokenApi,
+} from "./services/professional_request";
 
 // Private Routes
 import {
@@ -35,19 +38,19 @@ import HomePage from "./pages/home/homePage";
 import AboutUsPage from "./pages/about_us/aboutUsPage";
 import HelpCenterPage from "./pages/help_center/helpCenterPage";
 import ContactPage from "./pages/contact/contactPage";
-import TermsOfUsePage from "./pages/termsOfUsePage/termsOfUsePage";
+import TermsOfUsePage from "./pages/terms_of_use/termsOfUsePage";
 import AcceptTermsOfUsePage from "./pages/accept_terms_of_use/acceptTermsOfUsePage";
-import LoginPage from "./pages/loginPage/loginPage";
+import LoginPage from "./pages/login_for_professional/login_page";
 import RegisterPage from "./pages/register/register";
 import ChooseYourAvatarPage from "./pages/choose_your_avatar/chooseYourAvatarPage";
-import UserProfilePage from "./pages/user_profile/userProfilePage";
+import UserProfilePage from "./pages/professional_profile/userProfilePage";
 import EditDataPage from "./pages/edit_data/edit_dataPage";
 import EditEmailPage from "./pages/edit_email/editEmail";
 import EmailVerifiedSuccesfullyPage from "./pages/email_verified_successfully/emailVerifiedSuccessfully";
 import ForgotYourPasswordWithoutLoginPage from "./pages/forgot_your_password_without_login/forgotYourPassword_without_login";
-import ResetPasswordWithoutLoginPage from "./pages/reset_password_without_login/resetPasswordWithoutLoginPage";
-import ResetPasswordWithLoginPage from "./pages/reset_password_with_login/resetPasswordWithLoginPage";
-import PasswordChangedSuccessfullyPage from "./pages/password_changed_successfully/passwordChangedSuccessfully";
+import ResetPasswordWithoutLoginPage from "./pages/reset_password_without_login_for_professional/resetPasswordWithoutLoginPage";
+import ResetPasswordWithLoginPage from "./pages/reset_password_with_login_for_professional/resetPasswordWithLoginPage";
+import PasswordChangedSuccessfullyPage from "./pages/password_changed_successfully_message/passwordChangedSuccessfully";
 import DashboardPage from "./pages/dashboard/dashboard";
 import AvailabilityPage from "./pages/availability/availability";
 import AppointmentsPage from "./pages/appointments/appointments";

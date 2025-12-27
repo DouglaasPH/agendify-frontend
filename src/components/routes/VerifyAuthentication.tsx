@@ -1,25 +1,25 @@
 import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 import { Outlet, Navigate } from "react-router-dom";
 
 function VerifyAuthentication() {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+  const is_authenticated = useSelector(
+    (state: RootState) => state.professional.is_authenticated
   );
   const loading = useSelector((state: RootState) => state.loading.loading);
 
   if (loading) return null;
-  return isAuthenticated ? <Outlet /> : <Navigate to={"/login"} replace />;
+  return is_authenticated ? <Outlet /> : <Navigate to={"/login"} replace />;
 }
 
 function VerifyNotAuthentication() {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+  const is_authenticated = useSelector(
+    (state: RootState) => state.professional.is_authenticated
   );
   const loading = useSelector((state: RootState) => state.loading.loading);
 
   if (loading) return null;
-  return !isAuthenticated ? (
+  return !is_authenticated ? (
     <Outlet />
   ) : (
     <Navigate to={"/user/dashboard"} replace />

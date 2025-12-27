@@ -3,19 +3,18 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // cartoonAvatar
-import cartoonAvatars from "@/assets/cartoonAvatars";
+import cartoonAvatars from "@/assets/all_cartoon_avatars";
 
 // logo component
 import LogoComponent from "@/components/logo/Logo";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../store";
-import { resetUserData } from "@/features/auth/userDataSlice";
-import { logout } from "@/features/auth/authSlice";
+import type { RootState } from "../../../redux";
+import { logout as professional_logout } from "@/slices_of_redux/professional/professional_slice";
 
 // API
-import { logoutApi } from "@/services/authApi";
+import { request_to_professional_logout } from "@/services/professional_request";
 
 // motion
 import { motion } from "motion/react";
@@ -53,35 +52,33 @@ function LoggedInNavBar() {
 
   const [currentPage, setCurrentPage] = useState("Dashboard");
 
-  const user_data = useSelector((state: RootState) => state.userData);
-  const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+  const professional_data = useSelector(
+    (state: RootState) => state.professional
   );
 
   const navLinks: NavLink[] = [
-    { label: "Dashboard", address: "/user/dashboard", icon: House },
+    { label: "Dashboard", address: "/professional/dashboard", icon: House },
     {
       label: "Availabilities",
-      address: "/user/availability",
+      address: "/professional/availability",
       icon: Calendar,
     },
     {
       label: "Appointments",
-      address: "/user/appointment",
+      address: "/professional/appointment",
       icon: CalendarCheck,
     },
     {
       label: "View Profile",
-      address: "/user/profile",
+      address: "/professional/profile",
       icon: CircleUser,
     },
   ];
 
-  const handleLogout = async () => {
+  const handle_logout = async () => {
     try {
-      await logoutApi(access_token);
-      dispatch(resetUserData());
-      dispatch(logout());
+      await request_to_professional_logout(professional_data.access_token);
+      dispatch(professional_logout());
     } catch (error) {
       return error;
     }
@@ -118,7 +115,7 @@ function LoggedInNavBar() {
 
       {/* desktop layout */}
       <motion.div
-        key={user_data.profileAvatarId}
+        key={professional_data.profile_avatar_id}
         initial={{ scale: 0.8, opacity: 0, y: -50 }}
         exit={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -128,10 +125,10 @@ function LoggedInNavBar() {
           delay: 1.2,
         }}
         className={`hidden lg:flex justify-center items-center rounded-full select-none relative bg-gradient-to-br ${
-          cartoonAvatars[user_data.profileAvatarId].bgGradient
+          cartoonAvatars[professional_data.profile_avatar_id].bgGradient
         } py-2 px-2 text-xl border-black/20 border-1`}
       >
-        {cartoonAvatars[user_data.profileAvatarId].emoji}
+        {cartoonAvatars[professional_data.profile_avatar_id].emoji}
       </motion.div>
 
       {/* mobile layout */}
@@ -151,7 +148,7 @@ function LoggedInNavBar() {
           <SheetContent className="flex flex-col border-none bg-gradient-to-b from-white to-gray-200 [&>button]:text-gray-600">
             <SheetHeader className="flex flex-row gap-4 justify-start items-start border-b-1 border-b-gray-200 h-20">
               <motion.div
-                key={user_data.profileAvatarId}
+                key={professional_data.profile_avatar_id}
                 initial={{ scale: 0.8, opacity: 0, y: 50 }}
                 exit={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -161,13 +158,13 @@ function LoggedInNavBar() {
                   delay: 1.2,
                 }}
                 className={`justify-center items-center rounded-full select-none relative bg-gradient-to-br ${
-                  cartoonAvatars[user_data.profileAvatarId].bgGradient
+                  cartoonAvatars[professional_data.profile_avatar_id].bgGradient
                 } py-2 px-2 text-xl flex border-black/20 border-1`}
               >
-                {cartoonAvatars[user_data.profileAvatarId].emoji}
+                {cartoonAvatars[professional_data.profile_avatar_id].emoji}
               </motion.div>
               <motion.div
-                key={user_data.profileAvatarId}
+                key={professional_data.profile_avatar_id}
                 initial={{ opacity: 0, y: 50 }}
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -177,9 +174,9 @@ function LoggedInNavBar() {
                 }}
                 className="text-black"
               >
-                <p className="font-medium">{user_data.name}</p>
+                <p className="font-medium">{professional_data.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  {user_data.email}
+                  {professional_data.email}
                 </p>
               </motion.div>
             </SheetHeader>
@@ -232,7 +229,7 @@ function LoggedInNavBar() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 5 * 0.2, duration: 0.4 }}
-                onClick={() => handleLogout()}
+                onClick={() => handle_logout()}
                 className="text-gray-600 hover:bg-red transition-all duration-300 hover:bg-white/5 rounded-lg pl-5 w-full  flex justify-start items-center px-4"
               >
                 <span
@@ -251,7 +248,3 @@ function LoggedInNavBar() {
 }
 
 export default LoggedInNavBar;
-
-/*
-{"[&>button>svg]:w-8 [&>button>svg]:h-8 ";}
- */

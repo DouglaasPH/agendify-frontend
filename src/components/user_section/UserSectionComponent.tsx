@@ -9,10 +9,10 @@ import { Plus } from "lucide-react";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 // cartoon avatars
-import cartoonAvatars from "@/assets/cartoonAvatars";
+import cartoonAvatars from "@/assets/all_cartoon_avatars";
 
 // utils
 import { formatDate } from "@/lib/utils";

@@ -1,21 +1,21 @@
 import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 function AcceptTermsOfUsePagePrivateRoute() {
   const user_data_for_registration = useSelector((state: RootState) => {
     return {
-      fullName: state.register.fullName,
-      email: state.register.email,
-      phoneNumber: state.register.phoneNumber,
-      profession: state.register.profession,
-      password: state.register.password,
+      name: state.register_professional.name,
+      email: state.register_professional.email,
+      phone_number: state.register_professional.phone_number,
+      profession: state.register_professional.profession,
+      password: state.register_professional.password,
     };
   });
 
-  return user_data_for_registration.fullName !== "" &&
+  return user_data_for_registration.name !== "" &&
     user_data_for_registration.email !== "" &&
-    user_data_for_registration.phoneNumber !== "" &&
+    user_data_for_registration.phone_number !== "" &&
     user_data_for_registration.profession !== "" &&
     user_data_for_registration.password !== "" ? (
     <Outlet />
@@ -27,16 +27,16 @@ function AcceptTermsOfUsePagePrivateRoute() {
 function ChooseYourAvatarPagePrivateRoute() {
   const user_data_for_registration = useSelector((state: RootState) => {
     return {
-      fullName: state.register.fullName,
-      email: state.register.email,
-      phoneNumber: state.register.phoneNumber,
-      profession: state.register.profession,
-      password: state.register.password,
-      acceptedTermsOfUse: state.register.acceptedTermsOfUse,
+      name: state.register_professional.name,
+      email: state.register_professional.email,
+      phone_number: state.register_professional.phone_number,
+      profession: state.register_professional.profession,
+      password: state.register_professional.password,
+      accepted_terms_of_use: state.register_professional.accepted_terms_of_use,
     };
   });
 
-  return user_data_for_registration.acceptedTermsOfUse === true ? (
+  return user_data_for_registration.accepted_terms_of_use === true ? (
     <Outlet />
   ) : (
     <Navigate to={"/register"} replace />
@@ -45,7 +45,7 @@ function ChooseYourAvatarPagePrivateRoute() {
 
 function VerifyEmailInTheRegistrationPrivateRoute() {
   const profile_avatar_id = useSelector(
-    (state: RootState) => state.register.profileAvatarId
+    (state: RootState) => state.register_professional.profile_avatar_id
   );
 
   return profile_avatar_id !== null ? (

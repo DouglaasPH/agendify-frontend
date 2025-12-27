@@ -7,7 +7,7 @@ import NotLoggedInNavBar from "./components/notLoggedInNavBar";
 import LoggedInNavBar from "./components/loggedInNavBar";
 
 // redux
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 
 // motion
 import { motion } from "motion/react";
@@ -15,27 +15,27 @@ import { motion } from "motion/react";
 function NavBar() {
   const [notLoggedIn, setNotLoggedIn] = useState(false);
 
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+  const is_authenticated = useSelector(
+    (state: RootState) => state.professional.is_authenticated
   );
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (is_authenticated) {
       setNotLoggedIn(false);
     } else {
       setNotLoggedIn(true);
     }
-  }, [isAuthenticated]);
+  }, [is_authenticated]);
 
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handle_scroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handle_scroll);
+    return () => window.removeEventListener("scroll", handle_scroll);
   }, []);
 
   return (

@@ -6,16 +6,16 @@ import { CircleCheckBig } from "lucide-react";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 // api
-import { createAppointmentsApi } from "@/services/customer";
+import { createAppointmentsApi } from "@/services/customer_request";
 
 // utils
 import { formatDate, formatHours } from "@/lib/utils";
 
 // types
-import type { NewAppointment, Step } from "@/types/chat";
+import type { NewAppointment, Step } from "@/types/chat_types";
 
 type ConfirmingAppointmentProps = {
   newAppointment: NewAppointment | undefined;

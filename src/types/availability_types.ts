@@ -20,7 +20,7 @@ export interface AvailabilityCreate {
 
 export interface Availabilities_data_for_page {
   id: number;
-  firstColumn: { weekday: string; dateFormatted: string };
+  firstColumn: { week_day: string; date_formatted: string };
   secondColumn: { start_time: string; end_time: string };
   thirdColumn: { slot_duration: number };
   fourthColumn: { status: string };

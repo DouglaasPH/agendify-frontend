@@ -32,7 +32,7 @@ import {
 import { motion } from "motion/react";
 
 // utils
-import type { Appointment_data_for_page } from "@/types/appointment";
+import type { Appointment_data_for_page } from "@/types/appointment_types";
 
 // types
 import { similarity } from "@/lib/utils";

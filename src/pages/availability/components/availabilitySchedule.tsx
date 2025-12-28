@@ -41,10 +41,10 @@ import { motion } from "motion/react";
 import type {
   Availabilities_data_for_page,
   Filter,
-} from "@/types/availability";
+} from "@/types/availability_types";
 
 // API
-import { availabilityDeleteApi } from "@/services/availability";
+import { request_to_delete_availability_by_id_via_professional } from "@/services/availability_request";
 
 type AvailabilityScheduleProps = {
   availabilitiesData: Availabilities_data_for_page[];
@@ -82,7 +82,10 @@ function AvailabilitySchedule({
   };
 
   const handleDeleteAvailability = async (availability_id: number) => {
-    await availabilityDeleteApi(access_token, availability_id);
+    await request_to_delete_availability_by_id_via_professional(
+      access_token,
+      availability_id
+    );
     const newValueTableDataToView = tableDataToView.filter(
       (data) => data.id !== availability_id
     );

@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // Redux
-import type { RootState } from "../../store";
-import { resetUserData } from "../../features/auth/userDataSlice";
-import { logout } from "../../features/auth/authSlice";
+import type { RootState } from "../../redux";
+import { logout } from "@/slices_of_redux/professional/professional_slice";
 
 // API
-import { deleteApi, logoutApi } from "../../services/authApi";
+import {
+  request_to_delete_professional,
+  request_to_professional_logout,
+} from "../../services/professional_request";
 
 // cartoonAvatars
-import cartoonAvatars from "../../assets/cartoonAvatars";
+import cartoonAvatars from "../../assets/all_cartoon_avatars";
 
 // motion
 import { motion } from "motion/react";
@@ -33,33 +35,33 @@ import {
 } from "lucide-react";
 
 // utils
-import { goToErrorPage } from "@/lib/utils";
+import { go_to_error_page } from "@/lib/utils";
 
-function UserProfilePage() {
+function ProfessionalProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const data_user = useSelector((state: RootState) => state.userData);
+  const professional_data = useSelector(
+    (state: RootState) => state.professional
+  );
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
 
   const handleDeleteAccount = async () => {
     try {
-      await deleteApi(access_token);
-      dispatch(resetUserData());
+      await request_to_delete_professional(access_token);
       dispatch(logout());
     } catch (error) {
-      goToErrorPage(error);
+      go_to_error_page(error);
     }
   };
 
   const handleLogout = async () => {
     try {
-      await logoutApi(access_token);
-      dispatch(resetUserData());
+      await request_to_professional_logout(access_token);
       dispatch(logout());
     } catch (error) {
-      goToErrorPage(error);
+      go_to_error_page(error);
     }
   };
 
@@ -68,7 +70,7 @@ function UserProfilePage() {
       <section className="h-screen flex flex-col justify-center items-center gap-12">
         <div className="w-full flex flex-col gap-3 justify-center items-center">
           <motion.div
-            key={data_user.profileAvatarId}
+            key={professional_data.profile_avatar_id}
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             exit={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -78,10 +80,10 @@ function UserProfilePage() {
               delay: 1,
             }}
             className={`flex justify-center items-center rounded-full select-none relative bg-gradient-to-br ${
-              cartoonAvatars[data_user.profileAvatarId].bgGradient
+              cartoonAvatars[professional_data.profile_avatar_id].bgGradient
             } border-3 py-10 px-5 text-8xl border-black/20`}
           >
-            {cartoonAvatars[data_user.profileAvatarId].emoji}
+            {cartoonAvatars[professional_data.profile_avatar_id].emoji}
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -89,7 +91,7 @@ function UserProfilePage() {
             transition={{ duration: 0.2, delay: 1.4 }}
             className="max-w-4xl mx-auto bg-gradient-to-r from-gray-900 via-black to-gray-800 bg-clip-text text-transparent text-4xl md:text-4xl leading-tight text-center"
           >
-            {data_user.name}
+            {professional_data.name}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -97,7 +99,7 @@ function UserProfilePage() {
             transition={{ duration: 0.2, delay: 1.5 }}
             className="max-w-6/7 md:max-w-4xl mx-auto text-center text-xl md:text-2xl text-gray-600 leading-relaxed"
           >
-            {data_user.profession}
+            {professional_data.profession}
           </motion.p>
         </div>
         <motion.div
@@ -160,7 +162,7 @@ function UserProfilePage() {
                   </div>
                 </div>
                 <p className="text-xl md:text-2xl text-foreground">
-                  {data_user.name}
+                  {professional_data.name}
                 </p>
               </div>
             </div>
@@ -190,7 +192,7 @@ function UserProfilePage() {
                   </div>
                 </div>
                 <p className="text-xl md:text-2xl text-foreground">
-                  {data_user.profession}
+                  {professional_data.profession}
                 </p>
               </div>
             </div>
@@ -220,7 +222,7 @@ function UserProfilePage() {
                   </div>
                 </div>
                 <p className="text-xl md:text-2xl text-foreground">
-                  {data_user.phoneNumber}
+                  {professional_data.phone_number}
                 </p>
               </div>
             </div>
@@ -248,7 +250,7 @@ function UserProfilePage() {
                   </div>
                 </div>
                 <p className="text-xl md:text-2xl text-foreground">
-                  {data_user.email}
+                  {professional_data.email}
                 </p>
               </div>
             </div>
@@ -322,4 +324,4 @@ function UserProfilePage() {
   );
 }
 
-export default UserProfilePage;
+export default ProfessionalProfilePage;

@@ -10,11 +10,11 @@ import { AnimatePresence, motion } from "motion/react";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "@/store";
-import { setTimeIntervals } from "@/features/createAvailability/createAvailability";
+import type { RootState } from "@/redux";
+import { set_time_intervals } from "@/slices_of_redux/availability/create_availability_slice";
 
 // types
-import type { TimeIntervals } from "@/types/availability";
+import type { TimeIntervals } from "@/types/availability_types";
 
 type TimeIntervalsProps = {
   setCurrentSection: (data: string) => void;
@@ -23,7 +23,7 @@ type TimeIntervalsProps = {
 function DefineYourTimeIntervals({ setCurrentSection }: TimeIntervalsProps) {
   const dispatch = useDispatch();
   const timeIntervals = useSelector(
-    (state: RootState) => state.createAvailability.timeIntervals
+    (state: RootState) => state.create_availability.time_intervals
   );
 
   const changeInput = (
@@ -39,9 +39,7 @@ function DefineYourTimeIntervals({ setCurrentSection }: TimeIntervalsProps) {
       ...values,
     };
 
-    console.log(newTimeIntervals);
-
-    dispatch(setTimeIntervals(newTimeIntervals));
+    dispatch(set_time_intervals(newTimeIntervals));
   };
 
   {
@@ -116,7 +114,7 @@ function DefineYourTimeIntervals({ setCurrentSection }: TimeIntervalsProps) {
                           (currentTimeIntervals) =>
                             currentTimeIntervals !== timeInterval
                         );
-                        dispatch(setTimeIntervals(newTimeIntervals));
+                        dispatch(set_time_intervals(newTimeIntervals));
                       }
                     }}
                   />
@@ -162,7 +160,7 @@ function DefineYourTimeIntervals({ setCurrentSection }: TimeIntervalsProps) {
           onClick={() => {
             const newTimeIntervals = [...timeIntervals];
             newTimeIntervals.push({ start_time: "00:00", end_time: "00:00" });
-            dispatch(setTimeIntervals(newTimeIntervals));
+            dispatch(set_time_intervals(newTimeIntervals));
           }}
         >
           <Plus />

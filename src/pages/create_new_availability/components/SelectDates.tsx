@@ -3,20 +3,18 @@ import { useEffect, useState } from "react";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
+import { set_dates } from "@/slices_of_redux/availability/create_availability_slice";
 
 // shadcn
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 
-// components
-import { setDates } from "@/features/createAvailability/createAvailability";
-
 function SelectDates() {
   const dispatch = useDispatch();
   const availableDatesTS = useSelector(
-    (rootState: RootState) => rootState.createAvailability.dates
+    (rootState: RootState) => rootState.create_availability.dates
   ).map((date: string) => new Date(date));
   const [selectedDates, setSelectedDates] = useState<Date[]>(availableDatesTS);
 
@@ -24,7 +22,7 @@ function SelectDates() {
     const availableDatesISO = selectedDates.map((date: Date) =>
       date.toISOString()
     );
-    dispatch(setDates(availableDatesISO));
+    dispatch(set_dates(availableDatesISO));
   }, [selectedDates]);
 
   const onQuickApply = (numberOfDays: number) => {

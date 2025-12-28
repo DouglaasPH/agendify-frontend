@@ -12,18 +12,20 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { forgotYourPasswordApi } from "@/services/authApi";
 import { TriangleAlert } from "lucide-react";
 
 // motion
 import { motion } from "motion/react";
+
+// API
+import { request_to_send_email_to_change_password_of_professional } from "@/services/professional_request";
 
 function ForgotYourPasswordWithoutLoginPage() {
   const navigate = useNavigate();
   const [submited, setSubmited] = useState(false);
   const [email, setEmail] = useState("");
 
-  const redirectToLogin = () => {
+  const redirect_to_login = () => {
     setTimeout(() => {
       navigate("/login");
     }, 1500);
@@ -31,8 +33,8 @@ function ForgotYourPasswordWithoutLoginPage() {
 
   const submit = async () => {
     setSubmited(true);
-    await forgotYourPasswordApi(email);
-    redirectToLogin();
+    await request_to_send_email_to_change_password_of_professional(email);
+    redirect_to_login();
   };
 
   return (

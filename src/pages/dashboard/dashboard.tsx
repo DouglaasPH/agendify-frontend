@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 
 // Redux
 import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 
 // lucide
 import {
@@ -32,17 +32,17 @@ import SimpleLineChartGraphicCompoent from "./components/simpleLineChartGraphicC
 import UserSectionComponent from "@/components/user_section/UserSectionComponent";
 
 // types
-import type { Appointment } from "@/types/appointment";
-import type { Availability } from "@/types/availability";
+import type { Appointment } from "@/types/appointment_types";
+import type { Availability } from "@/types/availability_types";
 
 // API
-import { appointmentListApi } from "@/services/appointmentApi";
-import { availabilityListApi } from "@/services/availability";
+import { request_to_list_appointment_by_professional } from "@/services/appointment_request";
+import { request_to_list_availability_for_professional } from "@/services/availability_request";
 
 // utils
-import { goToErrorPage } from "@/lib/utils";
+import { go_to_error_page } from "@/lib/utils";
 
-interface UserData {
+interface Data {
   appointments_today: Appointment[] | null;
   available_slots: Availability[] | null;
   next_appointments: Appointment[] | null;
@@ -61,11 +61,13 @@ interface AvailableSlots {
 
 function DashboardPage() {
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
-  const chat_code = useSelector((state: RootState) => state.userData.chat_code);
+  const chat_code = useSelector(
+    (state: RootState) => state.professional.chat_code
+  );
 
-  const [userData2, setUserData2] = useState<UserData>({
+  const [data, setData] = useState<Data>({
     appointments_today: [],
     available_slots: [],
     next_appointments: [],
@@ -73,26 +75,26 @@ function DashboardPage() {
   const cards = [
     {
       label: "Today's Appointments",
-      quantity: userData2.appointments_today?.length,
+      quantity: data.appointments_today?.length,
       icon: Calendar,
       gradientColor: "from-blue-600 via-blue-400 to-blue-500",
     },
     {
       label: "Available Slots",
-      quantity: userData2.available_slots?.length,
+      quantity: data.available_slots?.length,
       icon: Clock3,
       gradientColor: "from-green-600 via-green-400 to-green-500",
     },
     {
       label: "Next Appointments",
-      quantity: userData2.next_appointments?.length,
+      quantity: data.next_appointments?.length,
       icon: Users,
       gradientColor: "from-purple-600 via-purple-400 to-purple-500",
     },
   ];
 
   const todaySchedule: TodaySchedule[] = [];
-  userData2.appointments_today?.map((current) => {
+  data.appointments_today?.map((current) => {
     if (current.availabilities.start_time) {
       const date = new Date(current.availabilities?.start_time);
       const time = date.toLocaleTimeString([], {
@@ -110,7 +112,7 @@ function DashboardPage() {
   });
 
   const availableSlots: AvailableSlots[] = [];
-  userData2.available_slots?.map((current) => {
+  data.available_slots?.map((current) => {
     if (current.start_time) {
       const date = new Date(current.start_time);
 
@@ -155,10 +157,8 @@ function DashboardPage() {
       const todayDate = new Date(today);
 
       try {
-        const allAppointmentsResponse = await appointmentListApi(
-          access_token,
-          {}
-        );
+        const allAppointmentsResponse =
+          await request_to_list_appointment_by_professional(access_token, {});
 
         if (allAppointmentsResponse.data.length !== 0) {
           todayAppointments = allAppointmentsResponse.data.filter(
@@ -213,10 +213,11 @@ function DashboardPage() {
           });
 
           setSimpleLineData(updatedData);
-          const allAvailabilitiesResponse = await availabilityListApi(
-            access_token,
-            {}
-          );
+          const allAvailabilitiesResponse =
+            await request_to_list_availability_for_professional(
+              access_token,
+              {}
+            );
 
           if (allAvailabilitiesResponse.data.length !== 0) {
             freeSlotsAvailabilities = allAvailabilitiesResponse.data.filter(
@@ -230,14 +231,14 @@ function DashboardPage() {
             );
           }
 
-          setUserData2({
+          setData({
             appointments_today: todayAppointments,
             next_appointments: nextAppointment,
             available_slots: freeSlotsAvailabilities,
           });
         }
       } catch (error) {
-        goToErrorPage(error);
+        go_to_error_page(error);
       }
     };
     fetchAppointments();
@@ -295,15 +296,15 @@ function DashboardPage() {
                 </h1>
                 <PieChartGraphicComponent
                   available={
-                    userData2.available_slots?.length != undefined
-                      ? userData2.available_slots?.length
+                    data.available_slots?.length != undefined
+                      ? data.available_slots?.length
                       : 0
                   }
                   booked={
-                    userData2.appointments_today?.length != undefined &&
-                    userData2.next_appointments?.length != undefined
-                      ? userData2.appointments_today?.length +
-                        userData2.next_appointments?.length
+                    data.appointments_today?.length != undefined &&
+                    data.next_appointments?.length != undefined
+                      ? data.appointments_today?.length +
+                        data.next_appointments?.length
                       : 0
                   }
                 />

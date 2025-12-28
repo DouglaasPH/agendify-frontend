@@ -15,24 +15,30 @@ import { motion } from "motion/react";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../store";
-import { modifyUserData } from "../../services/authApi";
-import { updateUserData } from "../../features/auth/userDataSlice";
+import type { RootState } from "../../redux";
+import { update_professional_data } from "@/slices_of_redux/professional/professional_slice";
+
+// API
+import { request_to_modify_data_of_professional } from "../../services/professional_request";
 
 // utils
-import { goToErrorPage } from "@/lib/utils";
+import { go_to_error_page } from "@/lib/utils";
 
 function EditDataPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
-  const data_user = useSelector((state: RootState) => state.userData);
+  const professional_data = useSelector(
+    (state: RootState) => state.professional
+  );
 
-  const [name, setName] = useState(data_user.name);
-  const [phoneNumber, setPhoneNumber] = useState(data_user.phoneNumber);
-  const [profession, setProfession] = useState(data_user.profession);
+  const [name, setName] = useState(professional_data.name);
+  const [phoneNumber, setPhoneNumber] = useState(
+    professional_data.phone_number
+  );
+  const [profession, setProfession] = useState(professional_data.profession);
   const [validatePhoneNumber, setValidatePhoneNumber] = useState<
     null | boolean
   >(true);
@@ -77,15 +83,18 @@ function EditDataPage() {
   const handleSaveChanges = async () => {
     if (name !== "" && validatePhoneNumber && profession !== "") {
       try {
-        const response = await modifyUserData(access_token, {
-          name,
-          phoneNumber,
-          profession,
-        });
-        dispatch(updateUserData(response.data));
+        const response = await request_to_modify_data_of_professional(
+          access_token,
+          {
+            name,
+            phone_number: phoneNumber,
+            profession,
+          }
+        );
+        dispatch(update_professional_data(response.data));
         navigate("/user/profile/");
       } catch (error) {
-        goToErrorPage(error);
+        go_to_error_page(error);
       }
     } else return;
   };

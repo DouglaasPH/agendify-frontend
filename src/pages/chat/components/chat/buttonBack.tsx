@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 // types
-import type { Step } from "@/types/chat";
+import type { Step } from "@/types/chat_types";
 
 type ButtonBackProps = {
   handleWithCustomerInteraction: (

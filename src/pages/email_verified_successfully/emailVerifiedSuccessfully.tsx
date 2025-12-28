@@ -12,7 +12,7 @@ import { motion } from "motion/react";
 import { Card } from "@/components/ui/card";
 
 // api
-import { modifyUserEmail } from "@/services/authApi";
+import { request_to_confirm_email_modification_of_professional_with_token } from "@/services/professional_request";
 
 function EmailVerifiedSuccesfullyPage() {
   const { token } = useParams();
@@ -25,7 +25,9 @@ function EmailVerifiedSuccesfullyPage() {
 
     const api = async () => {
       try {
-        await modifyUserEmail(token);
+        await request_to_confirm_email_modification_of_professional_with_token(
+          token
+        );
       } catch (error) {
         setHasError(true);
       }

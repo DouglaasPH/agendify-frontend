@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 
 // shadcn
 import { Card } from "@/components/ui/card";
@@ -12,7 +12,7 @@ import { Card } from "@/components/ui/card";
 import { motion } from "motion/react";
 
 // utils
-import { formatDate, formatHours, goToErrorPage } from "@/lib/utils";
+import { format_date, format_hours, go_to_error_page } from "@/lib/utils";
 
 // components
 import TitleAndStatus from "./components/titleAndStatus";
@@ -22,16 +22,16 @@ import PaginationComponent from "../availability/components/pagination";
 import NoAppointmentFound from "./components/noAppointmentsFound";
 
 // API
-import { appointmentListApi } from "../../services/appointmentApi";
+import { request_to_list_appointment_by_professional } from "@/services/appointment_request";
 
 // types
-import type { Appointment_data_for_page } from "@/types/appointment";
+import type { Appointment_data_for_page } from "@/types/appointment_types";
 
 export type Filter = [string, string, string];
 
 function AppointmentsPage() {
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
   const [filters, setFilters] = useState<Filter>([
     "All Status", // all status, confirmed, canceled or past
@@ -81,7 +81,7 @@ function AppointmentsPage() {
       {
         /* second selection */
       }
-      const chooseDate = formatDate(newFilter).dateFormatted;
+      const chooseDate = format_date(newFilter).date_formatted;
       if (chooseDate !== "Invalid Date") {
         newFilters = [filters[0], chooseDate, filters[2]];
       } else newFilters = [filters[0], "", filters[2]];
@@ -107,7 +107,7 @@ function AppointmentsPage() {
         appointment.fifthColumn.status === filters[0];
       const dateMatch =
         filters[1] === "" ||
-        appointment.secondColumn.dateFormatted === filters[1];
+        appointment.secondColumn.date_formatted === filters[1];
       const timeMatch =
         filters[2] === "" ||
         appointment.thirdColumn.start_time === filters[2] ||
@@ -130,7 +130,8 @@ function AppointmentsPage() {
   useEffect(() => {
     const fetchAvailabilities = async () => {
       try {
-        const allAppointments = await appointmentListApi(access_token, {});
+        const allAppointments =
+          await request_to_list_appointment_by_professional(access_token, {});
 
         allAppointments.data.sort(
           (a, b) =>
@@ -141,13 +142,13 @@ function AppointmentsPage() {
         const data: Appointment_data_for_page[] = [];
 
         allAppointments.data.forEach((appointment) => {
-          const transformDate = formatDate(
+          const transformDate = format_date(
             appointment.availabilities.start_time
           );
-          const transformStartTime = formatHours(
+          const transformStartTime = format_hours(
             appointment.availabilities.start_time
           );
-          const transformEndTime = formatHours(
+          const transformEndTime = format_hours(
             appointment.availabilities.end_time
           );
           const customer_name = appointment.customer;
@@ -175,7 +176,7 @@ function AppointmentsPage() {
         setAppointmentsData(data);
         setTableDataToView(data);
       } catch (error) {
-        goToErrorPage(error);
+        go_to_error_page(error);
       }
     };
     fetchAvailabilities();

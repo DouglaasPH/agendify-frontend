@@ -15,19 +15,21 @@ import { Button } from "@/components/ui/button";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 
 // API
-import { sendEmailToChangeEmail } from "../../services/authApi";
+import { request_to_send_email_to_change_email_of_professional } from "../../services/professional_request";
 
 // components
 import VerificationEmailModal from "./verificationEmailModal/verificationEmailModal";
 
 function EditEmailPage() {
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
-  const user_email = useSelector((state: RootState) => state.userData.email);
+  const current_email = useSelector(
+    (state: RootState) => state.professional.email
+  );
   const navigate = useNavigate();
   const [newEmail, setNewEmail] = useState("");
   const [validateNewEmail, setValidateNewEmail] = useState<null | boolean>(
@@ -35,22 +37,24 @@ function EditEmailPage() {
   );
   const [seeModal, setSeeModal] = useState(false);
 
-  const handleInsertNewEmail = (inputValue: string) => {
-    setNewEmail(inputValue);
+  const handle_insert_new_email = (input_value: string) => {
+    setNewEmail(input_value);
 
     const regex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 
-    if (inputValue.length !== 0 && !regex.test(inputValue))
+    if (input_value.length !== 0 && !regex.test(input_value))
       setValidateNewEmail(false);
-    if (inputValue.length === 0) setValidateNewEmail(null);
-    else if (user_email === inputValue) setValidateNewEmail(false);
+    if (input_value.length === 0) setValidateNewEmail(null);
+    else if (current_email === input_value) setValidateNewEmail(false);
     else setValidateNewEmail(true);
   };
 
-  const handleSendInstructions = async () => {
-    await sendEmailToChangeEmail(access_token, newEmail);
+  const handle_send_instructions = async () => {
+    await request_to_send_email_to_change_email_of_professional(
+      access_token,
+      newEmail
+    );
     setSeeModal(true);
-    console.log(seeModal);
   };
 
   return (
@@ -109,7 +113,7 @@ function EditEmailPage() {
                   id="email"
                   type="text"
                   value={newEmail}
-                  onChange={(e) => handleInsertNewEmail(e.target.value)}
+                  onChange={(e) => handle_insert_new_email(e.target.value)}
                   className={`bg-[#F0F2F5] rounded-xl p-3 w-full py-4 md:py-0${
                     validateNewEmail == null || validateNewEmail
                       ? "border-none"
@@ -123,7 +127,7 @@ function EditEmailPage() {
           <div className="px-5 md:px-15 pb-5 flex flex-col gap-5">
             <Button
               className="w-full py-6 md:py-5 rounded-xl text-lg bg-gradient-to-r from-blue-600 via-purple-600 to-purple-700 cursor-pointer"
-              onClick={() => handleSendInstructions()}
+              onClick={() => handle_send_instructions()}
             >
               Send Instructions
             </Button>

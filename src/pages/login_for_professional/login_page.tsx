@@ -2,12 +2,14 @@
 import { useState } from "react";
 
 // API
-import { getUserDataApi, loginApi } from "../../services/authApi";
+import {
+  request_to_get_data_by_id_via_access_token_for_professional,
+  request_to_login_for_professional,
+} from "../../services/professional_request";
 
 // Redux
+import { update_professional_data } from "@/slices_of_redux/professional/professional_slice";
 import { useDispatch } from "react-redux";
-import { setAccessToken } from "../../features/auth/authSlice";
-import { updateUserData } from "../../features/auth/userDataSlice";
 
 // shadcn/ui
 import { Button } from "@/components/ui/button";
@@ -25,7 +27,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "motion/react";
 
 // utils
-import { goToErrorPage } from "@/lib/utils";
+import { go_to_error_page } from "@/lib/utils";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -33,15 +35,24 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [errorApi, setErrorApi] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handle_login = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const loginResponse = await loginApi({ email, password });
-      const userDataResponse = await getUserDataApi(
-        loginResponse.data.access_token
+      const login_response = await request_to_login_for_professional({
+        email,
+        password,
+      });
+      const professional_data_response =
+        await request_to_get_data_by_id_via_access_token_for_professional(
+          login_response.data.access_token
+        );
+      dispatch(
+        update_professional_data({
+          access_token: login_response.data.access_token,
+          is_authenticated: true,
+        })
       );
-      dispatch(setAccessToken(loginResponse.data.access_token));
-      dispatch(updateUserData(userDataResponse.data));
+      dispatch(update_professional_data(professional_data_response.data));
     } catch (error: any) {
       if (
         error.response.status == 400 &&
@@ -51,7 +62,7 @@ function LoginPage() {
         setTimeout(() => {
           setErrorApi(false);
         }, 3000);
-      } else goToErrorPage(error);
+      } else go_to_error_page(error);
     }
   };
 
@@ -122,7 +133,7 @@ function LoginPage() {
                 <Button
                   variant="default"
                   className="w-full"
-                  onClick={handleLogin}
+                  onClick={handle_login}
                 >
                   Sign In
                 </Button>

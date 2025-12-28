@@ -8,12 +8,12 @@ import { Card } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 
 // types
-import type { Availability } from "@/types/availability";
-import type { NewAppointment, Step } from "@/types/chat";
+import type { Availability } from "@/types/availability_types";
+import type { NewAppointment, Step } from "@/types/chat_types";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 // utils
 import { formatHours } from "@/lib/utils";

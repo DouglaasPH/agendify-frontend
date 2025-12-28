@@ -3,16 +3,16 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 // Redux
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 
 // utils
-import { formatDate, formatHours, goToErrorPage } from "@/lib/utils";
+import { format_date, format_hours, go_to_error_page } from "@/lib/utils";
 
 // motion
 import { motion } from "motion/react";
 
 // API
-import { availabilityListApi } from "@/services/availability";
+import { request_to_list_availability_for_professional } from "@/services/availability_request";
 
 // shadcn
 import { Card } from "@/components/ui/card";
@@ -29,11 +29,11 @@ import TitleAndDescriptionComponent from "./components/titleAndDescriptionCompon
 import type {
   Availabilities_data_for_page,
   Filter,
-} from "@/types/availability";
+} from "@/types/availability_types";
 
 function AvailabilityPage() {
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
 
   const [filters, setFilters] = useState<Filter>([
@@ -161,13 +161,13 @@ function AvailabilityPage() {
           endOfWeek.setDate(startOfWeek.getDate() + 6);
 
           dataToView = tableDataToView.filter((availabilityData) => {
-            const date = new Date(availabilityData.firstColumn.dateFormatted);
+            const date = new Date(availabilityData.firstColumn.date_formatted);
             return date >= startOfWeek && date <= endOfWeek;
           });
           break;
         case "This Month":
           dataToView = tableDataToView.filter((availabilityData) => {
-            const date = new Date(availabilityData.firstColumn.dateFormatted);
+            const date = new Date(availabilityData.firstColumn.date_formatted);
             return (
               date.getMonth() === currentMonth &&
               date.getFullYear() === currentYear
@@ -176,7 +176,7 @@ function AvailabilityPage() {
           break;
         case "Past":
           dataToView = tableDataToView.filter((availabilityData) => {
-            const date = new Date(availabilityData.firstColumn.dateFormatted);
+            const date = new Date(availabilityData.firstColumn.date_formatted);
 
             return (
               date.getFullYear() < currentYear ||
@@ -192,14 +192,14 @@ function AvailabilityPage() {
           if (direction === "up") {
             dataToView = tableDataToView.sort(
               (a, b) =>
-                new Date(a.firstColumn.dateFormatted).getTime() -
-                new Date(b.firstColumn.dateFormatted).getTime()
+                new Date(a.firstColumn.date_formatted).getTime() -
+                new Date(b.firstColumn.date_formatted).getTime()
             );
           } else {
             dataToView = tableDataToView.sort(
               (a, b) =>
-                new Date(b.firstColumn.dateFormatted).getTime() -
-                new Date(a.firstColumn.dateFormatted).getTime()
+                new Date(b.firstColumn.date_formatted).getTime() -
+                new Date(a.firstColumn.date_formatted).getTime()
             );
           }
           break;
@@ -255,7 +255,8 @@ function AvailabilityPage() {
   useEffect(() => {
     const fetchAvailabilities = async () => {
       try {
-        const allAvailabilities = await availabilityListApi(access_token, {});
+        const allAvailabilities =
+          await request_to_list_availability_for_professional(access_token, {});
         allAvailabilities.data.sort(
           (a, b) =>
             new Date(b.start_time).getTime() - new Date(a.start_time).getTime()
@@ -264,9 +265,9 @@ function AvailabilityPage() {
         const data: Availabilities_data_for_page[] = [];
 
         allAvailabilities.data.forEach((availability) => {
-          const transformDate = formatDate(availability.start_time);
-          const transformStartTime = formatHours(availability.start_time);
-          const transformEndTime = formatHours(availability.end_time);
+          const transformDate = format_date(availability.start_time);
+          const transformStartTime = format_hours(availability.start_time);
+          const transformEndTime = format_hours(availability.end_time);
           const customer = availability.appointments?.customer;
 
           data.push({
@@ -293,7 +294,7 @@ function AvailabilityPage() {
         setAvailabilitiesData(data);
         setTableDataToView(data);
       } catch (error) {
-        goToErrorPage(error);
+        go_to_error_page(error);
       }
     };
     fetchAvailabilities();

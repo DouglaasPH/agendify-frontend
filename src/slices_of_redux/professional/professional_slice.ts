@@ -3,17 +3,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface UpdateProfessionalData {
-  name: string;
-  email: string;
-  phone_number: string;
-  profession: string;
-  profile_avatar_id: number;
-  chat_code: string;
+  access_token?: string;
+  is_authenticated?: boolean;
+  id?: number;
+  name?: string;
+  email?: string;
+  phone_number?: string;
+  profession?: string;
+  profile_avatar_id?: number;
+  chat_code?: string;
 }
 
 interface ProfessionalDataSlice {
   access_token: string | null;
   is_authenticated: boolean;
+  id: number | null;
   name: string;
   email: string;
   phone_number: string;
@@ -25,6 +29,7 @@ interface ProfessionalDataSlice {
 const initialState: ProfessionalDataSlice = {
   access_token: null,
   is_authenticated: false,
+  id: null,
   name: "",
   email: "",
   phone_number: "",

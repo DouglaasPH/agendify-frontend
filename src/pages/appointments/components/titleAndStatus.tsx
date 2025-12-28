@@ -11,7 +11,7 @@ import { CalendarDays } from "lucide-react";
 import { motion } from "motion/react";
 
 // type
-import type { Appointment_data_for_page } from "@/types/appointment";
+import type { Appointment_data_for_page } from "@/types/appointment_types";
 
 type TitleAndStatusProps = {
   appointmentsData: Appointment_data_for_page[];

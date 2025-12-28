@@ -10,15 +10,18 @@ import { Calendar, Clock, X } from "lucide-react";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 // api
-import { allAppointmentsApi, cancelAppointmentsApi } from "@/services/customer";
+import {
+  allAppointmentsApi,
+  cancelAppointmentsApi,
+} from "@/services/customer_request";
 import { formatDate, formatHours } from "@/lib/utils";
 
 // types
-import type { Appointment } from "@/types/appointment";
-import type { Step } from "@/types/chat";
+import type { Appointment } from "@/types/appointment_types";
+import type { Step } from "@/types/chat_types";
 
 type ViewAppointmentsProps = {
   handleWithCustomerInteraction: (

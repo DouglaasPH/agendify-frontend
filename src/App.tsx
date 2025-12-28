@@ -9,15 +9,15 @@ import { useEffect } from "react";
 
 // Redux
 import { useDispatch } from "react-redux";
-import { logout, setAccessToken } from "./features/auth/authSlice";
-import { resetUserData, updateUserData } from "./features/auth/userDataSlice";
-import { updateLoading } from "./features/loadingSlice";
+import {
+  logout,
+  update_professional_data,
+} from "./slices_of_redux/professional/professional_slice";
+import { update_loading } from "./slices_of_redux/loading/loading_slice";
 
 // API
-import {
-  getUserDataApi,
-  refreshTokenApi,
-} from "./services/professional_request";
+import { request_to_get_data_by_id_via_access_token_for_professional } from "./services/professional_request";
+import { refresh_token_request } from "./services/refresh_token_request";
 
 // Private Routes
 import {
@@ -34,17 +34,14 @@ import NavBar from "./components/navbar/navBar";
 import FooterBar from "./components/footerbar/footerBar";
 
 // Pages
-import HomePage from "./pages/home/homePage";
-import AboutUsPage from "./pages/about_us/aboutUsPage";
-import HelpCenterPage from "./pages/help_center/helpCenterPage";
-import ContactPage from "./pages/contact/contactPage";
-import TermsOfUsePage from "./pages/terms_of_use/termsOfUsePage";
+import HomePage from "./pages/home/home_page";
+import AboutUsPage from "./pages/about_us/about_us_page";
+import HelpCenterPage from "./pages/help_center/help_center_page";
+import ContactPage from "./pages/contact/contact_page";
+import TermsOfUsePage from "./pages/terms_of_use/terms_of_use_page";
 import AcceptTermsOfUsePage from "./pages/accept_terms_of_use/acceptTermsOfUsePage";
 import LoginPage from "./pages/login_for_professional/login_page";
-import RegisterPage from "./pages/register/register";
-import ChooseYourAvatarPage from "./pages/choose_your_avatar/chooseYourAvatarPage";
-import UserProfilePage from "./pages/professional_profile/userProfilePage";
-import EditDataPage from "./pages/edit_data/edit_dataPage";
+import EditDataPage from "./pages/edit_data/edit_data_page";
 import EditEmailPage from "./pages/edit_email/editEmail";
 import EmailVerifiedSuccesfullyPage from "./pages/email_verified_successfully/emailVerifiedSuccessfully";
 import ForgotYourPasswordWithoutLoginPage from "./pages/forgot_your_password_without_login/forgotYourPassword_without_login";
@@ -55,11 +52,14 @@ import DashboardPage from "./pages/dashboard/dashboard";
 import AvailabilityPage from "./pages/availability/availability";
 import AppointmentsPage from "./pages/appointments/appointments";
 import ChatPage from "./pages/chat/chat";
-import CreateNewAvailabilityPage from "./pages/create_new_availability/createNewAvailability";
-import PrivacyPolicyPage from "./pages/privacy_policy/privacyPolicy";
-import ErrorPage from "./pages/error/errorPage";
-import CheckEmailDuringRegistrationPage from "./pages/register/email_verify/verifyEmailInRegister";
+import PrivacyPolicyPage from "./pages/privacy_policy/privacy_policy_page";
+import ErrorPage from "./pages/error/error_page";
 import VerifyEmailInTheRegistrationPage from "./pages/choose_your_avatar/verify_email_in_the_registration/verifyEmailInTheRegistration";
+import ProfessionalProfilePage from "./pages/professional_profile/professional_profile_page";
+import RegisterPage from "./pages/register_for_professional/registration_page_for_professional";
+import { ChooseYourAvatarPage } from "./pages/choose_your_avatar/chooseYourAvatarPage";
+import CreateNewAvailabilityPage from "./pages/create_new_availability/createNewAvailability";
+import CheckEmailDuringRegistrationPage from "./pages/register_for_professional/confirm_registration/confirm_registration_page_for_professional";
 
 // URLs
 // /terms-of-use
@@ -79,17 +79,17 @@ import VerifyEmailInTheRegistrationPage from "./pages/choose_your_avatar/verify_
 // /forgot-your-password
 // /forgot-your-password/reset-password
 
-// /user/profile
-// /user/edit/user-data
-// /user/edit/email
-// /user/edit/password
-// /user/password-changed-succesfully-notice
+// /professional/profile
+// /professional/edit/data
+// /professional/edit/email
+// /professional/edit/password
+// /professional/password-changed-succesfully-notice
 // /change-email/:token
 
-// /user/dashboard
-// /user/availability
-// /user/availability/create
-// /user/appointment
+// /professional/dashboard
+// /professional/availability
+// /professional/availability/create
+// /professional/appointment
 
 // chat
 
@@ -214,20 +214,20 @@ const browserRoutes = createBrowserRouter(
           />
         </Route>
       </Route>
-      <Route path="user" element={<VerifyAuthentication />}>
+      <Route path="professional" element={<VerifyAuthentication />}>
         <Route path="profile">
           <Route
             index
             element={
               <>
-                <NavBar /> <UserProfilePage /> <FooterBar />
+                <NavBar /> <ProfessionalProfilePage /> <FooterBar />
               </>
             }
           />
           <Route path="edit">
             <Route
               index
-              path="user-data"
+              path="data"
               element={
                 <>
                   <NavBar /> <EditDataPage /> <FooterBar />
@@ -331,19 +331,23 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(updateLoading());
+    dispatch(update_loading());
     const refreshAccessToken = async () => {
       try {
-        const refreshTokenResponse = await refreshTokenApi();
-        dispatch(setAccessToken(refreshTokenResponse.data.access_token));
-        const userDataResponse = await getUserDataApi(
-          refreshTokenResponse.data.access_token
+        const refreshTokenResponse = await refresh_token_request();
+        dispatch(
+          update_professional_data({
+            access_token: refreshTokenResponse.data.access_token,
+          })
         );
-        dispatch(updateUserData(userDataResponse.data));
+        const response =
+          await request_to_get_data_by_id_via_access_token_for_professional(
+            refreshTokenResponse.data.access_token
+          );
+        dispatch(update_professional_data(response.data));
       } catch (error) {
         if (error.response.status == 401) {
           dispatch(logout());
-          dispatch(resetUserData());
         } else {
           window.location.href = `error/${error.repsonse.status}`;
         }
@@ -351,7 +355,7 @@ function App() {
     };
 
     refreshAccessToken();
-    dispatch(updateLoading());
+    dispatch(update_loading());
   }, []);
 
   return (

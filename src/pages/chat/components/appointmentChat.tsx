@@ -8,7 +8,7 @@ import { User } from "lucide-react";
 import { motion } from "motion/react";
 
 // pages
-import cartoonAvatars from "@/assets/cartoonAvatars";
+import cartoonAvatars from "@/assets/all_cartoon_avatars";
 
 // components
 import Initial from "./chat/initial";
@@ -21,13 +21,13 @@ import ConfirmingAppointment from "./chat/confirmingAppointment";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 // utils
 import { formatDate } from "@/lib/utils";
 
 // types
-import type { NewAppointment, Step } from "@/types/chat";
+import type { NewAppointment, Step } from "@/types/chat_types";
 
 function AppointmentChat() {
   const customerData = useSelector(

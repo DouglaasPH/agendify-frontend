@@ -9,11 +9,11 @@ import { motion } from "motion/react";
 
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 function Cards() {
   const quantityDataCards = useSelector(
-    (RootState: RootState) => RootState.createAvailability.dataCards
+    (RootState: RootState) => RootState.create_availability.data_cards
   );
 
   const cards = [
@@ -35,7 +35,7 @@ function Cards() {
     },
     {
       label: "TOTAL SLOTS",
-      quantity: quantityDataCards.totalSlots,
+      quantity: quantityDataCards.total_slots,
       icon: TrendingUp,
       colorIcon: "text-purple-500/70",
       quantityColor: "text-purple-600",
@@ -43,7 +43,7 @@ function Cards() {
     },
     {
       label: "HOURS/DAY",
-      quantity: quantityDataCards.hoursDay,
+      quantity: quantityDataCards.hours_day,
       icon: Timer,
       colorIcon: "text-orange-500/70",
       quantityColor: "text-orange-600",

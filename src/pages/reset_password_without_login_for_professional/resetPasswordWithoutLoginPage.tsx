@@ -1,3 +1,6 @@
+// react
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 // motion
 import { motion } from "motion/react";
 
@@ -11,10 +14,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { forgotYourPasswordResetPasswordApi } from "@/services/authApi";
-import { useNavigate, useParams } from "react-router-dom";
+
+// lucide
 import { ArrowRight, CheckCircle } from "lucide-react";
+
+// API
+import { request_to_confirm_password_modification_of_professional_with_token } from "@/services/professional_request";
 
 function ResetPasswordWithoutLoginPage() {
   const navigate = useNavigate();
@@ -27,14 +32,14 @@ function ResetPasswordWithoutLoginPage() {
   const [viewPasswordChangedSuccesfully, setViewPasswordChangedSuccesfully] =
     useState(false);
 
-  const changeInputConfirm = (inputValue: string) => {
+  const change_input_confirm_password = (inputValue: string) => {
     setConfirmNewPassword(inputValue);
 
     if (inputValue == newPassword) setIsTheSamePassword(true);
     else setIsTheSamePassword(false);
   };
 
-  const changeInputNew = (inputValue: string) => {
+  const change_input_new_password = (inputValue: string) => {
     setNewPassword(inputValue);
 
     if (inputValue == confirmNewPassword) setIsTheSamePassword(true);
@@ -45,7 +50,10 @@ function ResetPasswordWithoutLoginPage() {
     if (!isTheSamePassword || token == undefined) return;
 
     try {
-      await forgotYourPasswordResetPasswordApi(newPassword, token);
+      await request_to_confirm_password_modification_of_professional_with_token(
+        newPassword,
+        token
+      );
       setViewPasswordChangedSuccesfully(true);
     } catch {
       return;
@@ -110,7 +118,9 @@ function ResetPasswordWithoutLoginPage() {
                       placeholder="Enter your new password"
                       required
                       value={newPassword}
-                      onChange={(e) => changeInputNew(e.target.value)}
+                      onChange={(e) =>
+                        change_input_new_password(e.target.value)
+                      }
                     />
                   </div>
                   <div className="flex flex-col justify-start gap-2">
@@ -126,7 +136,9 @@ function ResetPasswordWithoutLoginPage() {
                           ? "border-1 border-red-600"
                           : ""
                       }
-                      onChange={(e) => changeInputConfirm(e.target.value)}
+                      onChange={(e) =>
+                        change_input_confirm_password(e.target.value)
+                      }
                     />
                   </div>
                 </form>

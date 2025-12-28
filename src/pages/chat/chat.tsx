@@ -1,4 +1,5 @@
 // react
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // components
@@ -7,24 +8,23 @@ import AppointmentChat from "./components/appointmentChat";
 import NotFoundChat from "./components/notFoundChat";
 
 //  API
-import { LoginWithCustomerIdApi, verifyChatCodeApi } from "@/services/customer";
-import { useParams } from "react-router-dom";
+import { request_to_get_professional_data_by_chat_code } from "@/services/professional_request";
+import { request_to_login_with_id_for_customer } from "@/services/customer_request";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/redux";
 import {
-  setAccessTokenCustomer,
-  updateCustomerData,
-  updateProfessionalData,
-} from "@/features/auth/customerSlice";
-import type { RootState } from "@/store";
+  update_customer_data,
+  update_professional_data,
+} from "@/slices_of_redux/customer/customer_slice";
 
 // utils
-import { goToErrorPage } from "@/lib/utils";
+import { go_to_error_page } from "@/lib/utils";
 
 function ChatPage() {
   const isAuthenticated = useSelector(
-    (state: RootState) => state.customer.auth.isAuthenticated
+    (state: RootState) => state.customer.customer_data.is_authenticated
   );
   const dispatch = useDispatch();
   const { chat_code } = useParams<string>();
@@ -35,14 +35,16 @@ function ChatPage() {
       if (!chat_code) return setIsValidChatCode(false);
 
       try {
-        const fetchAPI = await verifyChatCodeApi(chat_code);
+        const fetchAPI = await request_to_get_professional_data_by_chat_code(
+          chat_code
+        );
 
         if (fetchAPI.data) {
           setIsValidChatCode(true);
-          dispatch(updateProfessionalData(fetchAPI.data));
+          dispatch(update_professional_data(fetchAPI.data));
         }
       } catch (error) {
-        goToErrorPage(error);
+        go_to_error_page(error);
       }
     };
     verifyChatCode();
@@ -52,15 +54,21 @@ function ChatPage() {
     if (customer_id !== null) {
       const fetch = async () => {
         try {
-          const fetchAPI = await LoginWithCustomerIdApi(Number(customer_id));
+          const fetchAPI = await request_to_login_with_id_for_customer(
+            Number(customer_id)
+          );
           localStorage.setItem(
             "customer_id",
             String(fetchAPI.data.customer_data.id)
           );
-          dispatch(setAccessTokenCustomer(fetchAPI.data.access_token));
-          dispatch(updateCustomerData(fetchAPI.data.customer_data));
+          dispatch(
+            update_customer_data({
+              access_token: fetchAPI.data.access_token.access_token,
+            })
+          );
+          dispatch(update_customer_data(fetchAPI.data.customer_data));
         } catch (error) {
-          goToErrorPage(error);
+          go_to_error_page(error);
         }
       };
       fetch();
@@ -81,6 +89,3 @@ function ChatPage() {
 }
 
 export default ChatPage;
-
-/*
- */

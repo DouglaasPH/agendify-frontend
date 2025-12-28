@@ -1,6 +1,6 @@
 // redux
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 // shadcn
 import { Card } from "@/components/ui/card";
@@ -10,20 +10,20 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Calendar, CircleCheckBig, Eye } from "lucide-react";
 
 // utils
-import { formatDateShort } from "@/lib/utils";
+import { format_date_short } from "@/lib/utils";
 
 // motion
 import { motion } from "motion/react";
 
 function Overview() {
   const dailySchedules = useSelector(
-    (rootState: RootState) => rootState.createAvailability.timeIntervals
+    (rootState: RootState) => rootState.create_availability.time_intervals
   );
   const selectedDates = useSelector(
-    (rootState: RootState) => rootState.createAvailability.dates
+    (rootState: RootState) => rootState.create_availability.dates
   );
 
-  const convertToAMPM = (time: string) => {
+  const convert_to_am_or_pm = (time: string) => {
     const [hours, minutes] = time.split(":").map(Number);
     const period = hours >= 12 ? "PM" : "AM";
     const formattedHours = hours % 12 || 12;
@@ -59,8 +59,8 @@ function Overview() {
                   {index + 1}
                 </p>
                 <p className="font-semibold text-md text-gray-800">
-                  {convertToAMPM(timeInterval.start_time)} -{" "}
-                  {convertToAMPM(timeInterval.end_time)}
+                  {convert_to_am_or_pm(timeInterval.start_time)} -{" "}
+                  {convert_to_am_or_pm(timeInterval.end_time)}
                 </p>
               </Card>
             ))}
@@ -84,7 +84,7 @@ function Overview() {
                     className="py-3 pl-5 flex flex-row items-center gap-2 bg-green-50 border-1 border-green-100 rounded-md"
                   >
                     <p className="rounded-md text-green-600 font-bold text-sm">
-                      {formatDateShort(new Date(date))}
+                      {format_date_short(new Date(date))}
                     </p>
                   </Card>
                 ))

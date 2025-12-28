@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "@/store";
-import { reset } from "@/features/createAvailability/createAvailability";
+import type { RootState } from "@/redux";
+import { reset } from "@/slices_of_redux/availability/create_availability_slice";
 
 // shadcn
 import { Button } from "@/components/ui/button";
@@ -19,20 +19,17 @@ import TitleAndDescriptionComponent from "./components/TitleAndDescriptionCompon
 import Overview from "./components/Overview";
 
 // API
-import { availabilityCreateApi } from "@/services/availability";
+import { request_to_create_availability_by_professional } from "@/services/availability_request";
 
 // types
-import type { AvailabilityCreate } from "@/types/availability";
+import type { AvailabilityCreate } from "@/types/availability_types";
 
 function CreateNewAvailabilityPage() {
-  const { dates, timeIntervals } = useSelector(
-    (state: RootState) => state.createAvailability
-  );
-  const createAvailabilityData = useSelector(
-    (state: RootState) => state.createAvailability
+  const data_for_create_availability = useSelector(
+    (state: RootState) => state.create_availability
   );
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
 
   const dispatch = useDispatch();
@@ -43,31 +40,32 @@ function CreateNewAvailabilityPage() {
     navigate("/user/dashboard");
   };
   const onCreateAvailabilityButton = () => {
-    const allRequest: AvailabilityCreate[] = dates.flatMap((date) =>
-      timeIntervals.map((interval) => {
-        const [startH, startM] = interval.start_time.split(":").map(Number);
-        const [endH, endM] = interval.end_time.split(":").map(Number);
+    const allRequest: AvailabilityCreate[] =
+      data_for_create_availability.dates.flatMap((date) =>
+        data_for_create_availability.time_intervals.map((interval) => {
+          const [startH, startM] = interval.start_time.split(":").map(Number);
+          const [endH, endM] = interval.end_time.split(":").map(Number);
 
-        const startDateTime = new Date(date);
-        startDateTime.setHours(startH, startM, 0, 0);
+          const startDateTime = new Date(date);
+          startDateTime.setHours(startH, startM, 0, 0);
 
-        const endDateTime = new Date(date);
-        endDateTime.setHours(endH, endM, 0, 0);
+          const endDateTime = new Date(date);
+          endDateTime.setHours(endH, endM, 0, 0);
 
-        const slot_duration_minutes =
-          (endDateTime.getTime() - startDateTime.getTime()) / 60000;
+          const slot_duration_minutes =
+            (endDateTime.getTime() - startDateTime.getTime()) / 60000;
 
-        return {
-          date: startDateTime.toISOString().split("T")[0],
-          start_time: startDateTime.toISOString(),
-          end_time: endDateTime.toISOString(),
-          slot_duration_minutes,
-        };
-      })
-    );
+          return {
+            date: startDateTime,
+            start_time: startDateTime,
+            end_time: endDateTime,
+            slot_duration_minutes,
+          };
+        })
+      );
 
     for (const request of allRequest) {
-      availabilityCreateApi(access_token, request);
+      request_to_create_availability_by_professional(access_token, request);
     }
     navigate("/user/dashboard");
     dispatch(reset());
@@ -88,14 +86,14 @@ function CreateNewAvailabilityPage() {
             <div className="w-full grid grid-cols-[77%_20%] justify-between">
               <Button
                 className={`bg-green-600/40 hover:bg-green-600/40 py-6 cursor-pointer ${
-                  createAvailabilityData.dates.length > 0 &&
-                  createAvailabilityData.timeIntervals.length > 0
+                  data_for_create_availability.dates.length > 0 &&
+                  data_for_create_availability.time_intervals.length > 0
                     ? "bg-green-600 hover:bg-green-600/90 cursor-pointer"
                     : "bg-green-600/40 hover:bg-green-600/40 cursor-default"
                 }`}
                 onClick={() =>
-                  createAvailabilityData.dates.length > 0 &&
-                  createAvailabilityData.timeIntervals.length > 0
+                  data_for_create_availability.dates.length > 0 &&
+                  data_for_create_availability.time_intervals.length > 0
                     ? onCreateAvailabilityButton()
                     : null
                 }

@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // API
-import { modifyUserPassword } from "../../services/authApi";
+import { request_to_modify_password_with_login_for_professional } from "../../services/professional_request";
 
 // Redux
-import type { RootState } from "../../store";
+import type { RootState } from "../../redux";
 
 // motion
 import { motion } from "motion/react";
@@ -21,12 +21,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 // utils
-import { goToErrorPage } from "@/lib/utils";
+import { go_to_error_page } from "@/lib/utils";
 
 function ResetPasswordWithLoginPage() {
   const navigate = useNavigate();
   const access_token = useSelector(
-    (state: RootState) => state.auth.accessToken
+    (state: RootState) => state.professional.access_token
   );
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -41,7 +41,7 @@ function ResetPasswordWithLoginPage() {
     null
   );
 
-  const handleCurrentPassword = (inputValue: string) => {
+  const change_input_current_password = (inputValue: string) => {
     setCurrentPassword(inputValue);
     if (inputValue != "") {
       setValidatePassword(true);
@@ -50,7 +50,7 @@ function ResetPasswordWithLoginPage() {
     }
   };
 
-  const handleNewPassword = (inputValue: string) => {
+  const change_input_new_password = (inputValue: string) => {
     setNewPassword(inputValue);
     if (inputValue != "" && inputValue != currentPassword) {
       setValidateNewPassword(true);
@@ -59,7 +59,7 @@ function ResetPasswordWithLoginPage() {
     }
   };
 
-  const handleConfirmNewPassword = (inputValue: string) => {
+  const change_input_confirm_new_password = (inputValue: string) => {
     setConfirmNewPassword(inputValue);
     if (inputValue != "" && inputValue == newPassword) {
       setValidateConfirmNewPassword(true);
@@ -68,16 +68,17 @@ function ResetPasswordWithLoginPage() {
     }
   };
 
-  const handleSave = async () => {
+  const handle_save = async () => {
     if (validatePassword && validateNewPassword && validateConfirmNewPassword) {
       try {
-        await modifyUserPassword(access_token, {
-          currentPassword: currentPassword,
-          newPassword: newPassword,
-        });
+        await request_to_modify_password_with_login_for_professional(
+          access_token,
+          currentPassword,
+          newPassword
+        );
         navigate("/user/profile");
       } catch (error) {
-        goToErrorPage(error);
+        go_to_error_page(error);
       }
     } else return;
   };
@@ -135,7 +136,7 @@ function ResetPasswordWithLoginPage() {
                 id="currentPassword"
                 type="password"
                 value={currentPassword}
-                onChange={(e) => handleCurrentPassword(e.target.value)}
+                onChange={(e) => change_input_current_password(e.target.value)}
                 className={`bg-[#F0F2F5] rounded-xl p-3 w-full py-4 md:py-0 ${
                   validatePassword == null || validatePassword
                     ? "border-none"
@@ -157,7 +158,7 @@ function ResetPasswordWithLoginPage() {
                 id="newPassword"
                 type="password"
                 value={newPassword}
-                onChange={(e) => handleNewPassword(e.target.value)}
+                onChange={(e) => change_input_new_password(e.target.value)}
                 className={`bg-[#F0F2F5] rounded-xl p-3 w-full py-4 md:py-0 ${
                   validateNewPassword == null || validateNewPassword
                     ? "border-none"
@@ -182,7 +183,9 @@ function ResetPasswordWithLoginPage() {
                 id="confirmNewPassword"
                 type="password"
                 value={confirmNewPassword}
-                onChange={(e) => handleConfirmNewPassword(e.target.value)}
+                onChange={(e) =>
+                  change_input_confirm_new_password(e.target.value)
+                }
                 className={`bg-[#F0F2F5] rounded-xl p-3 w-full py-4 md:py-0 ${
                   validateConfirmNewPassword == null ||
                   validateConfirmNewPassword
@@ -197,7 +200,7 @@ function ResetPasswordWithLoginPage() {
         <div className="px-5 md:px-15 pb-5 flex flex-col gap-5">
           <Button
             className="w-full py-6 md:py-5 rounded-xl text-lg bg-gradient-to-r from-blue-600 via-purple-600 to-purple-700"
-            onClick={() => handleSave()}
+            onClick={() => handle_save()}
           >
             <Save /> Save Changes
           </Button>

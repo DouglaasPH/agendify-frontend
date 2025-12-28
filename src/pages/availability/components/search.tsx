@@ -22,7 +22,7 @@ import { similarity } from "@/lib/utils";
 import type {
   Availabilities_data_for_page,
   Filter,
-} from "@/types/availability";
+} from "@/types/availability_types";
 
 type SearchProps = {
   filters: Filter;

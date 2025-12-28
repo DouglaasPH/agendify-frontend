@@ -51,8 +51,6 @@ function PieChartGraphicComponent({ available, booked }: Props) {
     },
   ];
 
-  console.log(data);
-
   const renderActiveShape = ({
     cx,
     cy,

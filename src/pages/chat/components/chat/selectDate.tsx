@@ -5,19 +5,19 @@ import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { Calendar } from "@/components/ui/calendar";
 
 // api
-import { allAvailabilitiesApi } from "@/services/customer";
+import { allAvailabilitiesApi } from "@/services/customer_request";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 import { updateAllAvailabilities } from "@/features/auth/customerSlice";
 
 // utils
 import { formatDate } from "@/lib/utils";
 
 // types
-import type { Availability } from "@/types/availability";
-import type { NewAppointment, Step } from "@/types/chat";
+import type { Availability } from "@/types/availability_types";
+import type { NewAppointment, Step } from "@/types/chat_types";
 
 type SelectDate = {
   setNewAppointment: Dispatch<SetStateAction<NewAppointment>>;

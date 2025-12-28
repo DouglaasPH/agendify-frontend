@@ -18,10 +18,10 @@ import {
   setAccessTokenCustomer,
   updateCustomerData,
 } from "@/features/auth/customerSlice";
-import type { RootState } from "@/store";
+import type { RootState } from "@/redux";
 
 // api
-import { registerOrLoginWithtoutCustomerIdApi } from "@/services/customer";
+import { registerOrLoginWithtoutCustomerIdApi } from "@/services/customer_request";
 
 // utils
 import { goToErrorPage, handleValidateEmail } from "@/lib/utils";

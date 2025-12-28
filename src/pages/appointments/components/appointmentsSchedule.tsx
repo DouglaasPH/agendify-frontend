@@ -27,10 +27,10 @@ import { Calendar, CircleAlert, Clock, Trash2, User } from "lucide-react";
 import { motion } from "motion/react";
 
 // types
-import type { Appointment_data_for_page } from "@/types/appointment";
+import type { Appointment_data_for_page } from "@/types/appointment_types";
 
 // API
-import { appointmentCancelApi } from "@/services/appointmentApi";
+import { request_to_cancel_appointment_by_id_via_professional } from "@/services/appointment_request";
 
 type AppointmentScheduleProps = {
   appointmentsData: Appointment_data_for_page[];
@@ -60,7 +60,10 @@ function AppointmentSchedule({
   };
 
   const handleCancelAppointment = async (appointment_id: number) => {
-    await appointmentCancelApi(access_token, appointment_id);
+    await request_to_cancel_appointment_by_id_via_professional(
+      access_token,
+      appointment_id
+    );
     const newValueTableDataToView = tableDataToView.filter(
       (data) => data.id !== appointment_id
     );

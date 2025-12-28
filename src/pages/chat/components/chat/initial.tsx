@@ -5,7 +5,7 @@ import { Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // types
-import type { Step } from "@/types/chat";
+import type { Step } from "@/types/chat_types";
 
 type InitialProps = {
   handleWithCustomerInteraction: (

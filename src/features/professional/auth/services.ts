@@ -8,7 +8,7 @@ import { ROUTES } from "@/app/routes";
 import type { RefreshResponse } from "./types";
 
 export const refresh_token_request = async (): Promise<RefreshResponse> => {
-  return await api.post(ROUTES.refresh_token, {
+  return await api.get(ROUTES.refresh_token, {
     withCredentials: true,
   });
 };

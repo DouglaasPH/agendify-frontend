@@ -49,9 +49,11 @@ function LoginPage() {
       );
       dispatch(update_professional_data(professional_data_response.data));
     } catch (error: any) {
+      console.log(error);
       if (
         error.response.status == 400 &&
-        error.response.data.detail === "Invalid username or password."
+        (error.response.data.detail === "Invalid email" ||
+          error.response.data.detail === "Invalid password")
       ) {
         setErrorApi(true);
         setTimeout(() => {

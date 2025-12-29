@@ -23,7 +23,6 @@ export const request_to_login_for_professional = async (
   form_data.append("password", login_request.password);
 
   return await api.post(ROUTES.professional.login, form_data, {
-    headers: { "Content-Type": "multipart/form-data" },
     withCredentials: true,
   });
 };

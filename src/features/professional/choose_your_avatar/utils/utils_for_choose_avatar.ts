@@ -74,7 +74,7 @@ export const useChooseAvatar = (
       dispatch(
         update_professional_data({ profile_avatar_id: selectedAvatar.id })
       );
-      navigate("/user/profile");
+      navigate("/professional/profile");
     } catch (error) {
       navigate(`/error/${error.response?.status}`);
     }

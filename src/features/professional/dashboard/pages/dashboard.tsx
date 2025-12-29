@@ -28,8 +28,8 @@ import { Badge } from "@/shared/ui/badge";
 
 // components (graphics and user section)
 import ProfessionalSectionComponent from "@/shared/components/ProfessionalSectionComponent";
-import PieChartGraphicComponent from "../components/pieChartGraphicComponent";
-import SimpleLineChartGraphicCompoent from "../components/simpleLineChartGraphicComponent";
+import PieChartGraphicComponent from "../components/PieChartGraphicComponent";
+import SimpleLineChartGraphicCompoent from "../components/SimpleLineChartGraphicComponent";
 
 // types
 import type { Appointment, Availability } from "@/shared/types/types";

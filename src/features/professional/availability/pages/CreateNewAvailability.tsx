@@ -37,7 +37,7 @@ function CreateNewAvailabilityPage() {
 
   const onCancelButton = () => {
     dispatch(reset());
-    navigate("/user/dashboard");
+    navigate("/professional/dashboard");
   };
   const onCreateAvailabilityButton = () => {
     const allRequest: AvailabilityCreate[] =
@@ -67,7 +67,7 @@ function CreateNewAvailabilityPage() {
     for (const request of allRequest) {
       request_to_create_availability_by_professional(access_token, request);
     }
-    navigate("/user/dashboard");
+    navigate("/professional/dashboard");
     dispatch(reset());
   };
 

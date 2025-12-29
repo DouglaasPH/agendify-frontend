@@ -22,7 +22,7 @@ function VerifyNotAuthentication() {
   return !is_authenticated ? (
     <Outlet />
   ) : (
-    <Navigate to={"/user/dashboard"} replace />
+    <Navigate to={"/professional/dashboard"} replace />
   );
 }
 

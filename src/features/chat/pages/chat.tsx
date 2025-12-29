@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // components
-import LoginChat from "../components/loginChat";
-import AppointmentChat from "../components/appointmentChat";
-import NotFoundChat from "../components/notFoundChat";
+import LoginChat from "../components/LoginChat";
+import AppointmentChat from "../components/AppointmentChat";
+import NotFoundChat from "../components/NotFoundChat";
 
 //  API
 import { request_to_get_professional_data_by_chat_code } from "../../professional/services_professional";

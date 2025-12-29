@@ -10,56 +10,71 @@ import { useEffect } from "react";
 // Redux
 import { useDispatch } from "react-redux";
 import {
-  logout,
+  reset,
   update_professional_data,
-} from "./slices_of_redux/professional/professional_slice";
-import { update_loading } from "./slices_of_redux/loading/loading_slice";
+} from "../features/professional/slice";
+import { update_loading } from "../shared/components/loading/slice";
 
 // API
-import { request_to_get_data_by_id_via_access_token_for_professional } from "./services/professional_request";
-import { refresh_token_request } from "./services/refresh_token_request";
+import { request_to_get_data_by_id_via_access_token_for_professional } from "../features/professional/services_professional";
+import { refresh_token_request } from "../features/professional/auth/services";
 
 // Private Routes
 import {
   VerifyAuthentication,
   VerifyNotAuthentication,
-} from "./components/routes/VerifyAuthentication";
+} from "../shared/utils/VerifyAuthentication";
 import {
   AcceptTermsOfUsePagePrivateRoute,
   VerifyEmailInTheRegistrationPrivateRoute,
-} from "./components/routes/PrivateRoutes";
+} from "../shared/utils/PrivateRoutes";
 
 // Components
-import NavBar from "./components/navbar/navBar";
-import FooterBar from "./components/footerbar/footerBar";
+import NavBar from "../shared/components/NavBar";
+import FooterBar from "../shared/components/FooterBar";
 
 // Pages
-import HomePage from "./pages/home/home_page";
-import AboutUsPage from "./pages/about_us/about_us_page";
-import HelpCenterPage from "./pages/help_center/help_center_page";
-import ContactPage from "./pages/contact/contact_page";
-import TermsOfUsePage from "./pages/terms_of_use/terms_of_use_page";
-import AcceptTermsOfUsePage from "./pages/accept_terms_of_use/acceptTermsOfUsePage";
-import LoginPage from "./pages/login_for_professional/login_page";
-import EditDataPage from "./pages/edit_data/edit_data_page";
-import EditEmailPage from "./pages/edit_email/editEmail";
-import EmailVerifiedSuccesfullyPage from "./pages/email_verified_successfully/emailVerifiedSuccessfully";
-import ForgotYourPasswordWithoutLoginPage from "./pages/forgot_your_password_without_login/forgotYourPassword_without_login";
-import ResetPasswordWithoutLoginPage from "./pages/reset_password_without_login_for_professional/resetPasswordWithoutLoginPage";
-import ResetPasswordWithLoginPage from "./pages/reset_password_with_login_for_professional/resetPasswordWithLoginPage";
-import PasswordChangedSuccessfullyPage from "./pages/password_changed_successfully_message/passwordChangedSuccessfully";
-import DashboardPage from "./pages/dashboard/dashboard";
-import AvailabilityPage from "./pages/availability/availability";
-import AppointmentsPage from "./pages/appointments/appointments";
-import ChatPage from "./pages/chat/chat";
-import PrivacyPolicyPage from "./pages/privacy_policy/privacy_policy_page";
-import ErrorPage from "./pages/error/error_page";
-import VerifyEmailInTheRegistrationPage from "./pages/choose_your_avatar/verify_email_in_the_registration/verifyEmailInTheRegistration";
-import ProfessionalProfilePage from "./pages/professional_profile/professional_profile_page";
-import RegisterPage from "./pages/register_for_professional/registration_page_for_professional";
-import { ChooseYourAvatarPage } from "./pages/choose_your_avatar/chooseYourAvatarPage";
-import CreateNewAvailabilityPage from "./pages/create_new_availability/createNewAvailability";
-import CheckEmailDuringRegistrationPage from "./pages/register_for_professional/confirm_registration/confirm_registration_page_for_professional";
+// features/marketing
+import HomePage from "../features/marketing/pages/Home";
+import AboutUsPage from "../features/marketing/pages/AboutUs";
+import HelpCenterPage from "../features/marketing/pages/HelpCenter";
+import ContactPage from "../features/marketing/pages/Contact";
+import TermsOfUsePage from "../features/marketing/pages/TermsOfUse";
+import ErrorPage from "../features/marketing/pages/Error";
+import PrivacyPolicyPage from "../features/marketing/pages/PrivacyPolicy";
+import PasswordChangedSuccessfullyPage from "../features/marketing/pages/PasswordChangedSuccessfully";
+
+// features/professional/auth
+import AcceptTermsOfUsePage from "../features/professional/auth/pages/AcceptTermsOfUsePage";
+import LoginPage from "../features/professional/auth/pages/Login";
+import ForgotYourPasswordWithoutLoginPage from "../features/professional/auth/pages/ForgotYourPasswordPage";
+import ResetPasswordWithoutLoginPage from "../features/professional/auth/pages/ModifyPasswordWithoutLoginPage";
+import VerifyEmailInTheRegistrationPage from "../features/professional/auth/pages/VerifyEmailInTheRegistration";
+import ConfirmRegistrationPage from "../features/professional/auth/pages/ConfirmRegistration";
+import RegisterPage from "../features/professional/auth/pages/Register";
+
+// features/professional/choose_your_avatar
+import { ChooseYourAvatarPage } from "../features/professional/choose_your_avatar/chooseYourAvatarPage";
+
+// features/professional/profile
+import EditDataPage from "../features/professional/profile/pages/EditData";
+import EditEmailPage from "../features/professional/profile/pages/EditEmail";
+import EmailVerifiedSuccesfullyPage from "../features/professional/profile/pages/EmailVerifiedSuccessfully";
+import ResetPasswordWithLoginPage from "../features/professional/profile/pages/ResetPasswordWithLoginPage";
+import ProfessionalProfilePage from "../features/professional/profile/pages/ProfessionalProfile";
+
+// /features/professional/dashboard
+import DashboardPage from "../features/professional/dashboard/pages/dashboard";
+
+// /features/professional/availability
+import AvailabilityPage from "../features/professional/availability/pages/availability";
+import CreateNewAvailabilityPage from "../features/professional/availability/pages/CreateNewAvailability";
+
+// /features/professional/appointment
+import AppointmentsPage from "../features/professional/appointment/pages/appointments";
+
+// /features/professional/chat
+import ChatPage from "../features/chat/pages/chat";
 
 // URLs
 // /terms-of-use
@@ -317,7 +332,7 @@ const browserRoutes = createBrowserRouter(
       />
       <Route
         path="/validate-email-in-register/:token"
-        element={<CheckEmailDuringRegistrationPage />}
+        element={<ConfirmRegistrationPage />}
       />
       <Route
         path="change-email/:token"
@@ -347,7 +362,7 @@ function App() {
         dispatch(update_professional_data(response.data));
       } catch (error) {
         if (error.response.status == 401) {
-          dispatch(logout());
+          dispatch(reset());
         } else {
           window.location.href = `error/${error.repsonse.status}`;
         }

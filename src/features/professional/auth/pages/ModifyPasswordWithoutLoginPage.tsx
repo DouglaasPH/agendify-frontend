@@ -78,7 +78,7 @@ function ModifyPasswordWithoutLoginPage() {
               <Button
                 className="w-full py-6 md:py-5 rounded-xl text-lg bg-gradient-to-r from-blue-600 via-purple-600 to-purple-700 text-white items-center hover:text-white"
                 variant="outline"
-                onClick={() => navigate("/user/profile")}
+                onClick={() => navigate("/professional/profile")}
               >
                 Go to Login <ArrowRight className="size-4" />
               </Button>

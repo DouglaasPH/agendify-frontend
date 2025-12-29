@@ -16,7 +16,7 @@ import LoadingType from "@/shared/components/loading/Loading";
 // API
 import { request_to_register_professional } from "../../services_professional";
 
-function CheckEmailDuringRegistrationPage() {
+function ConfirmRegistrationPage() {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const [status, setStatus] = useState<undefined | number>();
@@ -92,7 +92,7 @@ function CheckEmailDuringRegistrationPage() {
               <Button
                 className="w-full py-6 md:py-5 rounded-xl text-lg bg-gradient-to-r from-blue-600 via-purple-600 to-purple-700 text-white items-center hover:text-white cursor-pointer"
                 variant="outline"
-                onClick={() => navigate("/user/profile")}
+                onClick={() => navigate("/professional/profile")}
               >
                 {allStatus[status].descriptionButton}{" "}
                 <ArrowRight className="size-4" />
@@ -105,4 +105,4 @@ function CheckEmailDuringRegistrationPage() {
   );
 }
 
-export default CheckEmailDuringRegistrationPage;
+export default ConfirmRegistrationPage;

@@ -207,7 +207,7 @@ function LoggedInNavBar() {
             <section className="flex flex-col gap-3">
               <motion.a
                 key="Profile"
-                onClick={() => navigate("user/profile")}
+                onClick={() => navigate("professional/profile")}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 4 * 0.2, duration: 0.4 }}

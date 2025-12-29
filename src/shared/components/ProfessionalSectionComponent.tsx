@@ -18,7 +18,9 @@ import cartoonAvatars from "../assets/all_cartoon_avatars";
 import { format_date } from "../utils/utils";
 
 function ProfessionalSectionComponent() {
-  const user_data = useSelector((state: RootState) => state.userData);
+  const professional_data = useSelector(
+    (state: RootState) => state.professional
+  );
   const today = new Date();
 
   const transformDate = format_date(today);
@@ -32,14 +34,14 @@ function ProfessionalSectionComponent() {
     >
       <div className="flex items-center gap-5">
         <div className="flex justify-center items-center rounded-full select-none relative bg-gradient-to-r from-blue-600 to-purple-600 border-1 py-2 px-1 text-4xl border-black/20">
-          {cartoonAvatars[user_data.profileAvatarId].emoji}
+          {cartoonAvatars[professional_data.profile_avatar_id].emoji}
         </div>
         <div>
           <h1 className="font-normal text-4xl leading-tight">
-            Welcome back, {user_data.name.split(" ")[0]}!
+            Welcome back, {professional_data.name.split(" ")[0]}!
           </h1>
           <p className="text-gray-500 text-md leading-tight">
-            {transformDate.weekday}, {transformDate.dateFormatted}
+            {transformDate.week_day}, {transformDate.date_formatted}
           </p>
         </div>
       </div>

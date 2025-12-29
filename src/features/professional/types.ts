@@ -41,7 +41,9 @@ export interface RegisterData {
 }
 
 export interface CheckEmailResponse {
-  exists: boolean;
+  data: {
+    exists: boolean;
+  };
 }
 
 export interface UpdateProfessionalData {

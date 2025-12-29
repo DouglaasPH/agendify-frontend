@@ -27,6 +27,12 @@ interface ProfessionalData {
 }
 
 function ChooseYourAvatarPage({ mode }: Props) {
+  const registerProfessional = useSelector(
+    (state: RootState) => state.register_professional
+  );
+  const professional_profile_avatar_id = useSelector(
+    (state: RootState) => state.professional.id
+  );
   const [professsionalData, setProfessionalData] = useState<ProfessionalData>({
     name: "",
     email: "",
@@ -34,27 +40,6 @@ function ChooseYourAvatarPage({ mode }: Props) {
     profession: "",
     phone_number: "",
     profile_avatar_id: 0,
-  });
-
-  useSelector((state: RootState) => {
-    if (mode == "register") {
-      setProfessionalData({
-        name: state.register_professional.name,
-        email: state.register_professional.email,
-        password: state.register_professional.password,
-        profession: state.register_professional.profession,
-        phone_number: state.register_professional.phone_number,
-        profile_avatar_id:
-          state.register_professional.profile_avatar_id !== null
-            ? state.register_professional.profile_avatar_id
-            : 0,
-      });
-    } else {
-      setProfessionalData((prev) => ({
-        ...prev,
-        profile_avatar_id: state.professional.profile_avatar_id,
-      }));
-    }
   });
 
   const { setSelectedAvatar, setCurrentSection } =
@@ -66,7 +51,27 @@ function ChooseYourAvatarPage({ mode }: Props) {
         all_cartoon_avatars[professsionalData.profile_avatar_id]
       );
 
+      setProfessionalData((prev) => ({
+        ...prev,
+        profile_avatar_id:
+          professional_profile_avatar_id !== null
+            ? professional_profile_avatar_id
+            : 0,
+      }));
+
       if (professsionalData.profile_avatar_id > 5) setCurrentSection(2);
+    } else {
+      setProfessionalData({
+        name: registerProfessional.name,
+        email: registerProfessional.email,
+        password: registerProfessional.password,
+        profession: registerProfessional.profession,
+        phone_number: registerProfessional.phone_number,
+        profile_avatar_id:
+          registerProfessional.profile_avatar_id !== null
+            ? registerProfessional.profile_avatar_id
+            : 0,
+      });
     }
   }, []);
 

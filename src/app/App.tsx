@@ -26,6 +26,7 @@ import {
 } from "../shared/utils/VerifyAuthentication";
 import {
   AcceptTermsOfUsePagePrivateRoute,
+  ChooseYourAvatarPagePrivateRoute,
   VerifyEmailInTheRegistrationPrivateRoute,
 } from "../shared/utils/PrivateRoutes";
 
@@ -194,14 +195,16 @@ const browserRoutes = createBrowserRouter(
                 </>
               }
             />
-            <Route
-              path="choose-your-avatar"
-              element={
-                <>
-                  <ChooseYourAvatarPage mode="register" />
-                </>
-              }
-            />
+            <Route element={<ChooseYourAvatarPagePrivateRoute />}>
+              <Route
+                path="choose-your-avatar"
+                element={
+                  <>
+                    <ChooseYourAvatarPage mode="register" />
+                  </>
+                }
+              />
+            </Route>
             <Route element={<VerifyEmailInTheRegistrationPrivateRoute />}>
               <Route
                 path="verify-email"

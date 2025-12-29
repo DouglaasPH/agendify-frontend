@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import type { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
 import { update_professional_data } from "../../slice";
+import { update_data as update_data_of_register } from "../../auth/slice_register_professional";
 
 // API
 import {
@@ -34,6 +35,7 @@ export const useChooseAvatar = (
   const dispatch = useDispatch();
   const [selectedAvatar, setSelectedAvatar] = useState(all_cartoon_avatars[0]);
   const [currentSection, setCurrentSection] = useState(1);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const access_token = useSelector(
     (state: RootState) => state.professional.access_token
@@ -43,12 +45,19 @@ export const useChooseAvatar = (
   const avatarLimiterDisplayedEnd = currentSection === 1 ? 6 : 12;
 
   const handle_generate_token_for_register = async () => {
+    setLoading(true);
     try {
       await request_to_generate_a_registration_token_for_register_professional(
         professional_data
       );
+      dispatch(
+        update_data_of_register({ profile_avatar_id: selectedAvatar.id })
+      );
+      navigate("/register/verify-email");
     } catch (error) {
       go_to_error_page(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,6 +76,7 @@ export const useChooseAvatar = (
   };
 
   const handle_update_account = async () => {
+    setLoading(true);
     try {
       await request_to_modify_data_of_professional(access_token, {
         profile_avatar_id: selectedAvatar.id,
@@ -76,11 +86,14 @@ export const useChooseAvatar = (
       );
       navigate("/professional/profile");
     } catch (error) {
-      navigate(`/error/${error.response?.status}`);
+      go_to_error_page(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return {
+    loading,
     selectedAvatar,
     setSelectedAvatar,
     currentSection,

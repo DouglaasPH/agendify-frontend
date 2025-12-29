@@ -11,7 +11,8 @@ export const ROUTES = {
     confirm_email_modification: "/professional/confirm-email-modification",
     confirm_password_modification:
       "/professional/confirm-password-modification", //OK
-    generate_verification_token: "/professional/generate-verification-token",
+    generate_verification_token:
+      "/professional/register/generate-verification-token",
     register: "/professional/register",
     login: "/professional/login",
     logout: "/professional/logout",

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 // redux slice
 import { request_to_check_email_of_professional } from "../../services_professional";
-import { update_professional_data as update_data_to_register_professional } from "../../slice";
+import { update_data as update_data_to_register_professional } from "../slice_register_professional";
 
 // shadcn/ui
 import { Button } from "@/shared/ui/button";
@@ -150,7 +150,7 @@ function RegisterPage() {
         const response = await request_to_check_email_of_professional(
           professional.email
         );
-        if (!response.exists) {
+        if (!response.data.exists) {
           dispatch(update_data_to_register_professional(professional));
           navigate("accept-terms-of-use");
         } else {

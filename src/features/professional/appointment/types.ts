@@ -22,3 +22,20 @@ export interface Appointment_data_for_page {
   fourthColumn: { slot_duration: number };
   fifthColumn: { status: string };
 }
+
+export interface AppointmentListData {
+  availabilities_id?: number;
+  status?: string;
+  customer?: string;
+  customer_email?: string;
+  date?: string;
+  start_time?: string;
+  end_time?: string;
+  slot_duration_minutes?: number;
+}
+
+export interface AppointmentCreateData {
+  professional_id: number;
+  availability_id: number;
+  customer_id: number;
+}

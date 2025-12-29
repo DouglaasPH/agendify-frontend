@@ -23,10 +23,10 @@ import { Card } from "@/shared/ui/card";
 
 // Components
 import Cards from "../components/CardsForAvailability";
-import Search from "../components/search";
-import AvailabilitySchedule from "../components/availabilitySchedule";
-import NoAvailabilitiesFound from "../components/noAvailabilitiesFound";
-import PaginationComponent from "../components/pagination";
+import Search from "../components/Search";
+import AvailabilitySchedule from "../components/AvailabilitySchedule";
+import NoAvailabilitiesFound from "../components/NoAvailabilitiesFound";
+import PaginationComponent from "../../../../shared/components/Pagination";
 import TitleAndDescriptionComponent from "../components/TitleAndDescriptionComponentForAvailability";
 
 // types

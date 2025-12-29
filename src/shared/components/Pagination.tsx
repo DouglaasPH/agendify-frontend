@@ -6,7 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/shared/ui/pagination";
 
 // motion
 import { motion } from "motion/react";
@@ -37,6 +37,7 @@ function PaginationComponent({
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
+              size={"default"}
               className={
                 currentPage === 1
                   ? "text-gray-400 hover:text-gray-400 hover:bg-transparent"
@@ -61,13 +62,14 @@ function PaginationComponent({
                   }
                   onClick={() => setCurrentPage(pageNumber)}
                 >
-                  <PaginationLink>{pageNumber}</PaginationLink>
+                  <PaginationLink size={"default"}>{pageNumber}</PaginationLink>
                 </PaginationItem>
               );
             })}
 
           <PaginationItem>
             <PaginationNext
+              size={"default"}
               className={
                 currentPage === amountOfSections
                   ? "text-gray-400 hover:text-gray-400 hover:bg-transparent"

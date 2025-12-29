@@ -8,6 +8,7 @@ import { ROUTES } from "@/app/routes";
 import type { AppointmentCreateData } from "./appointment/types";
 import type {
   Appointment,
+  AppointmentListData,
   AppointmentListResponse,
   Succesfully,
 } from "@/shared/types/types";

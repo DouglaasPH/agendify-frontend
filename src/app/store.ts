@@ -6,7 +6,7 @@ import professional_slice from "@/features/professional/slice";
 import register_professional_slice from "./slices_of_redux/professional/register_professional_slice";
 import customer_slice from "./slices_of_redux/customer/customer_slice";
 import create_availability_slice from "@/features/professional/availability/slice";
-import loading_slice from "./slices_of_redux/loading/loading_slice";
+import loading_slice from "@/shared/components/loading/slice";
 
 export const redux = configureStore({
   reducer: {

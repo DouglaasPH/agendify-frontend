@@ -30,7 +30,7 @@ import { motion } from "motion/react";
 import type { Appointment_data_for_page } from "../types";
 
 // API
-import { request_to_cancel_appointment_by_id_via_professional } from "../services";
+import { request_to_cancel_appointment_by_id_via_professional } from "../../services_appointment";
 
 type AppointmentScheduleProps = {
   appointmentsData: Appointment_data_for_page[];

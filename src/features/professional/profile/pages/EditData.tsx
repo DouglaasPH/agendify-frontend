@@ -19,7 +19,7 @@ import type { RootState } from "@/app/store";
 import { update_professional_data } from "../../slice";
 
 // API
-import { request_to_modify_data_of_professional } from "../../services";
+import { request_to_modify_data_of_professional } from "../../services_professional";
 
 // utils
 import { go_to_error_page } from "@/shared/utils/utils";

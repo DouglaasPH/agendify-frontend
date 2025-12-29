@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // API
-import { request_to_modify_password_with_login_for_professional } from "../../services";
+import { request_to_modify_password_with_login_for_professional } from "../../services_professional";
 
 // Redux
 import type { RootState } from "@/app/store";

@@ -9,8 +9,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Badge } from "@/components/ui/badge";
+} from "@/shared/ui/alert-dialog";
+import { Badge } from "@/shared/ui/badge";
 import {
   Table,
   TableBody,
@@ -18,7 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/ui/table";
 
 // lucide
 import {
@@ -38,13 +38,10 @@ import {
 import { motion } from "motion/react";
 
 // types
-import type {
-  Availabilities_data_for_page,
-  Filter,
-} from "@/types/availability_types";
+import type { Availabilities_data_for_page, Filter } from "../types";
 
 // API
-import { request_to_delete_availability_by_id_via_professional } from "@/services/availability_request";
+import { request_to_delete_availability_by_id_via_professional } from "../../services_availability";
 
 type AvailabilityScheduleProps = {
   availabilitiesData: Availabilities_data_for_page[];
@@ -165,7 +162,7 @@ function AvailabilitySchedule({
                           : null
                       }`}
                     >
-                      {data.firstColumn.weekday}
+                      {data.firstColumn.week_day}
                     </span>
                     <span
                       className={`text-gray-500 ${
@@ -174,7 +171,7 @@ function AvailabilitySchedule({
                           : null
                       }`}
                     >
-                      {data.firstColumn.dateFormatted}
+                      {data.firstColumn.date_formatted}
                     </span>
                   </div>
                 </TableCell>
@@ -265,8 +262,8 @@ function AvailabilitySchedule({
                             Are you sure you want to delete this availability
                             slot for{" "}
                             <span className="font-bold text-gray-500">
-                              {data.firstColumn.weekday},{" "}
-                              {data.firstColumn.dateFormatted}
+                              {data.firstColumn.week_day},{" "}
+                              {data.firstColumn.date_formatted}
                             </span>{" "}
                             from{" "}
                             <span className="font-bold text-gray-500">

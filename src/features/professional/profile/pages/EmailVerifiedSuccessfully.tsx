@@ -12,7 +12,7 @@ import { motion } from "motion/react";
 import { Card } from "@/shared/ui/card";
 
 // api
-import { request_to_confirm_email_modification_of_professional_with_token } from "../../services";
+import { request_to_confirm_email_modification_of_professional_with_token } from "../../services_professional";
 
 function EmailVerifiedSuccesfullyPage() {
   const { token } = useParams();

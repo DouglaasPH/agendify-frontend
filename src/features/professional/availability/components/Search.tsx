@@ -1,13 +1,13 @@
 // shadcn/ui
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Card } from "@/shared/ui/card";
+import { Input } from "@/shared/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/ui/select";
 
 // lucide
 import { Calendar, Funnel, Search } from "lucide-react";
@@ -16,13 +16,10 @@ import { Calendar, Funnel, Search } from "lucide-react";
 import { motion } from "motion/react";
 
 // utils
-import { similarity } from "@/lib/utils";
+import { similarity } from "@/shared/utils/utils";
 
 // types
-import type {
-  Availabilities_data_for_page,
-  Filter,
-} from "@/types/availability_types";
+import type { Availabilities_data_for_page, Filter } from "../types";
 
 type SearchProps = {
   filters: Filter;
@@ -71,8 +68,8 @@ function SearchComponent({
 
     return data.filter((item) => {
       const values = [
-        item.firstColumn.weekday,
-        item.firstColumn.dateFormatted,
+        item.firstColumn.week_day,
+        item.firstColumn.date_formatted,
         item.secondColumn.start_time,
         item.secondColumn.end_time,
         item.fifthColumn.customer || "",

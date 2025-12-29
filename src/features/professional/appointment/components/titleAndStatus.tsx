@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // shadcn
-import { Card } from "@/components/ui/card";
+import { Card } from "@/shared/ui/card";
 
 // lucide
 import { CalendarDays } from "lucide-react";
@@ -11,7 +11,7 @@ import { CalendarDays } from "lucide-react";
 import { motion } from "motion/react";
 
 // type
-import type { Appointment_data_for_page } from "@/types/appointment_types";
+import type { Appointment_data_for_page } from "../types";
 
 type TitleAndStatusProps = {
   appointmentsData: Appointment_data_for_page[];

@@ -19,7 +19,7 @@ import TitleAndDescriptionComponent from "../components/TitleAndDescriptionCompo
 import Overview from "../components/Overview";
 
 // API
-import { request_to_create_availability_by_professional } from "../services";
+import { request_to_create_availability_by_professional } from "../../services_availability";
 
 // types
 import type { AvailabilityCreate } from "../types";

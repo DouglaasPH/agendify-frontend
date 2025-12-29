@@ -14,7 +14,7 @@ import type { RootState } from "@/app/store";
 import { reset } from "@/features/professional/slice";
 
 // API
-import { request_to_professional_logout } from "@/features/professional/services";
+import { request_to_professional_logout } from "@/features/professional/services_professional";
 
 // motion
 import { motion } from "motion/react";

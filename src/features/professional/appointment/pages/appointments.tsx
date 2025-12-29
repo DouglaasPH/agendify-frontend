@@ -19,14 +19,14 @@ import {
 } from "@/shared/utils/utils";
 
 // components
-import TitleAndStatus from "../components/titleAndStatus";
-import Filters from "../components/filters";
-import AppointmentSchedule from "../components/appointmentsSchedule";
+import TitleAndStatus from "../components/TitleAndStatus";
+import Filters from "../components/Filters";
+import AppointmentSchedule from "../components/AppointmentsSchedule";
 import PaginationComponent from "@/shared/components/Pagination";
-import NoAppointmentFound from "../components/noAppointmentsFound";
+import NoAppointmentFound from "../components/NoAppointmentsFound";
 
 // API
-import { request_to_list_appointment_by_professional } from "../services";
+import { request_to_list_appointment_by_professional } from "../../services_appointment";
 
 // types
 import type { Appointment_data_for_page } from "../types";

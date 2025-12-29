@@ -2,22 +2,18 @@
 import { useState } from "react";
 
 // shadcn
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Button } from "@/shared/ui/button";
+import { Card } from "@/shared/ui/card";
+import { Input } from "@/shared/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
+} from "@/shared/ui/select";
+import { Calendar } from "@/shared/ui/calendar";
 
 // lucide
 import {
@@ -32,10 +28,10 @@ import {
 import { motion } from "motion/react";
 
 // utils
-import type { Appointment_data_for_page } from "@/types/appointment_types";
+import type { Appointment_data_for_page } from "../types";
 
 // types
-import { similarity } from "@/lib/utils";
+import { similarity } from "@/shared/utils/utils";
 
 type FiltersProps = {
   appointmentsData: Appointment_data_for_page[];

@@ -2,8 +2,8 @@
 import { useNavigate } from "react-router-dom";
 
 // shadcn/ui
-import { Button } from "@/components/ui/button";
-import { CardContent } from "@/components/ui/card";
+import { Button } from "@/shared/ui/button";
+import { CardContent } from "@/shared/ui/card";
 
 // lucide
 import { Calendar, Plus } from "lucide-react";

@@ -16,7 +16,7 @@ import {
 import { motion } from "motion/react";
 
 // API
-import { request_to_list_availability_for_professional } from "../services";
+import { request_to_list_availability_for_professional } from "../../services_availability";
 
 // shadcn
 import { Card } from "@/shared/ui/card";

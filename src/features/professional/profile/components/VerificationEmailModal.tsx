@@ -2,8 +2,8 @@
 import { useNavigate } from "react-router-dom";
 
 // shadcn
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from "@/shared/ui/button";
+import { Card } from "@/shared/ui/card";
 
 // motion
 import { motion } from "motion/react";

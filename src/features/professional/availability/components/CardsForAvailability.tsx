@@ -1,5 +1,5 @@
 // shadcn/ui
-import { Card } from "@/components/ui/card";
+import { Card } from "@/shared/ui/card";
 
 // lucide
 import { CalendarCheck, CalendarX, Timer, Users } from "lucide-react";
@@ -8,7 +8,7 @@ import { CalendarCheck, CalendarX, Timer, Users } from "lucide-react";
 import { motion } from "motion/react";
 
 // type
-import type { Availabilities_data_for_page } from "@/types/availability_types";
+import type { Availabilities_data_for_page } from "../types";
 
 type CardsProps = {
   availabilitiesData: Availabilities_data_for_page[];
@@ -33,7 +33,7 @@ function Cards({ availabilitiesData }: CardsProps) {
     endOfWeek.setDate(startOfWeek.getDate() + 6);
 
     return availabilitiesData.filter((availabilityData) => {
-      const date = new Date(availabilityData.firstColumn.dateFormatted);
+      const date = new Date(availabilityData.firstColumn.date_formatted);
       return date >= startOfWeek && date <= endOfWeek;
     }).length;
   };

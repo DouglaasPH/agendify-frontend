@@ -10,7 +10,7 @@ import { reset } from "../../slice";
 import {
   request_to_delete_professional,
   request_to_professional_logout,
-} from "../../services";
+} from "../../services_professional";
 
 // cartoonAvatars
 import cartoonAvatars from "@/shared/assets/all_cartoon_avatars";

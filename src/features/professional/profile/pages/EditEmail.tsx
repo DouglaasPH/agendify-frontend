@@ -18,10 +18,10 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/app/store";
 
 // API
-import { request_to_send_email_to_change_email_of_professional } from "../../services";
+import { request_to_send_email_to_change_email_of_professional } from "../../services_professional";
 
 // components
-import VerificationEmailModal from "../components/verificationEmailModal";
+import VerificationEmailModal from "../components/VerificationEmailModal";
 
 function EditEmailPage() {
   const access_token = useSelector(

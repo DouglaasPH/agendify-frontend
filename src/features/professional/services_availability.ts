@@ -47,9 +47,10 @@ export const request_to_get_availability_by_id_for_professional = async (
 
 export const request_to_list_availability_for_customer = async (
   access_token: string | null,
+  professional_id: number,
   availability_data?: Partial<AvailabilityListData>
 ): Promise<AvailabilitiesListResponse> => {
-  return await api.get(ROUTES.availability.list_for_customer, {
+  return await api.get(ROUTES.availability.list_for_customer(professional_id), {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },

@@ -27,7 +27,8 @@ export const ROUTES = {
     get_by_id_for_professional: (availability_id: number) =>
       `/availability/professional/get/${availability_id}`,
     list_for_professional: "/availability/professional/list",
-    list_for_customer: "/availability/customer/list",
+    list_for_customer: (professional_id: number) =>
+      `/availability/customer/list/${professional_id}`,
     delete_by_id_via_professional: (availability_id: number) =>
       `/availability/professional/delete/${availability_id}`,
   },

@@ -73,12 +73,16 @@ export const request_to_check_email_of_professional = async (
 export const request_to_professional_logout = async (
   access_token: string | null
 ): Promise<Succesfully> => {
-  return await api.post(ROUTES.professional.logout, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    withCredentials: true,
-  });
+  return await api.post(
+    ROUTES.professional.logout,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      withCredentials: true,
+    }
+  );
 };
 
 export const request_to_delete_professional = async (

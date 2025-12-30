@@ -58,10 +58,12 @@ function ProfessionalProfilePage() {
 
   const handleLogout = async () => {
     try {
+      console.log(access_token);
       await request_to_professional_logout(access_token);
       dispatch(reset());
+      navigate("/");
     } catch (error) {
-      go_to_error_page(error);
+      console.log(error);
     }
   };
 

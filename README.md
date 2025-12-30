@@ -1,196 +1,239 @@
-# 🗓️ Agendify — Frontend
+# Agendify
 
-**Agendify** is an intelligent scheduling system for self-employed professionals, enabling interaction between clients and service providers in a simple and automated way.
-This part of the project corresponds to the **frontend**, developed in **React**, focusing on performance, componentization, and integration with the FastAPI backend.
+Agendify é uma plataforma web voltada para profissionais autônomos que precisam de um gerenciamento de agendamentos inteligente e eficiente.
 
----
+A aplicação tem como objetivo reduzir o tempo gasto com organização de horários, automatizando o processo de agendamento e facilitando a gestão de compromissos, clientes e disponibilidade — tudo em um só lugar.
 
-## 🚀 Main Technologies
+<br>
 
-| Technology                     | Usage                                                |
-| ------------------------------ | ---------------------------------------------------- |
-| **React.js (Vite)**            | Base framework for building the interface            |
-| **TypeScript**                 | Static typing and code safety                        |
-| **React Router DOM**           | Management of public and private routes              |
-| **Axios**                      | Communication with the backend API                   |
-| **Shadcn/UI + Tailwind CSS**   | Styling and reusable components                      |
-| **React Hook Form + Zod**      | Form validation and control                          |
-| **Context API / Custom Hooks** | Authentication and global state management           |
-| **Framer Motion**              | Smooth animations in components and page transitions |
+## Tecnologias Utilizadas
 
----
+- **TypeScript** — Linguagem de programação do projeto
+- **React** — Framework moderno
+- **Vite** — Ferramenta de build e desenvolvimento
+- **NPM** — Gerenciador de pacotes
+- **Tailwind CSS** — Framework CSS
+- **Redux Toolkit** — Gerenciamento de estado global
+- **Axios** — Comuicação com a API
+- **Radix UI** — Componentes para UI
+- **Shadcn/ui** — Biblioteca de componentes reutilizáveis baseada em Radix UI
+- **Lucide-React** — Biblioteca de ícones SVG
+- **Framer Motion** — Animações e transições
+- **Recharts** – Visualização de dados e gráficos
+- **Sonner** – Sistema de notificações (toasts)
 
-## 📁 Folder Structure
+<br>
+
+## Estrutura do Projeto
+
+```
+agendify_frontend/
+├─── public/
+│    └── logo.png
+├─── src/
+│    ├── app/
+│    │   ├── api_config.ts
+│    │   ├── App.tsx
+│    │   ├── main.tsx
+│    │   ├── routes.ts
+│    │   └── store.ts
+│    ├── features/
+│    │   ├── chat/
+│    │   │   ├── components/
+│    │   │   │   ├── AppointmentChat.tsx
+│    │   │   │   ├── ButtonBack.tsx
+│    │   │   │   ├── ConfirmingAppointment.tsx
+│    │   │   │   ├── Initial.tsx
+│    │   │   │   ├── LoginChat.tsx
+│    │   │   │   ├── NotFoundChat.tsx
+│    │   │   │   ├── SelectDate.tsx
+│    │   │   │   ├── SelectTime.tsx
+│    │   │   │   └── ViewAppointments.tsx
+│    │   │   ├── pages/
+│    │   │   │   └── chat.tsx
+│    │   │   ├── pages/
+│    │   │   ├── services.ts
+│    │   │   ├── slice.ts
+│    │   │   └── types.ts
+│    │   ├── marketing/
+│    │   │   ├── pages/
+│    │   │   │   ├── AboutUs.tsx
+│    │   │   │   ├── Contact.tsx
+│    │   │   │   ├── Error.tsx
+│    │   │   │   ├── HelpCenter.tsx
+│    │   │   │   ├── Home.tsx
+│    │   │   │   ├── PasswordChangedSuccesfully.tsx
+│    │   │   │   ├── PrivacyPolicy.tsx
+│    │   │   │   └── TermsOfUse.tsx
+│    │   └── professional/
+│    │       ├── appointment/
+│    │       │   ├── components/
+│    │       │   │   ├── AppointmentSchedule.tsx
+│    │       │   │   ├── Filters.tsx
+│    │       │   │   ├── NoAppointmentsFound.tsx
+│    │       │   │   └── TitleAndStatus.tsx
+│    │       │   ├── pages/
+│    │       │   │   └── appointments.tsx
+│    │       │   └── types.ts
+│    │       ├── auth/
+│    │       │   ├── components/
+│    │       │   │   ├── AcceptTerms.tsx
+│    │       │   │   ├── FirstSection.tsx
+│    │       │   │   ├── FourthSection.tsx
+│    │       │   │   ├── ReadTerms.tsx
+│    │       │   │   ├── SecondSection.tsx
+│    │       │   │   └── ThirdSection.tsx
+│    │       │   ├── pages/
+│    │       │   │   ├── AcceptTermsOfUsePage.tsx
+│    │       │   │   ├── ConfirmRegistration.tsx
+│    │       │   │   ├── ForgoutYourPassswordPage.tsx
+│    │       │   │   ├── Login.tsx
+│    │       │   │   ├── ModifyPasswordWithoutLoginPage.tsx
+│    │       │   │   ├── Register.tsx
+│    │       │   │   └── VerifyEmailInTheRegistration.tsx
+│    │       │   │── services.ts
+│    │       │   │── slice_register_professional.ts
+│    │       │   └── types.ts
+│    │       ├── availability/
+│    │       │   ├── components/
+│    │       │   │   ├── AvailabilitySchedule.tsx
+│    │       │   │   ├── CardsForAvailability.tsx
+│    │       │   │   ├── CardsForCreateNewAvailability.tsx
+│    │       │   │   ├── DefineyourTimeIntervalseadTerms.tsx
+│    │       │   │   ├── NoAvailabilitiesFound.tsx
+│    │       │   │   ├── Overview.tsx
+│    │       │   │   ├── Search.tsx
+│    │       │   │   ├── SelectDates.tsx
+│    │       │   │   ├── TimeSlotsAndsSelectDateCard.tsx
+│    │       │   │   ├── TitleAndDescriptionComponentForAvailability.tsx
+│    │       │   │   └── TitleAndDescriptionComponentForCreateNewAvailability.tsx
+│    │       │   ├── pages/
+│    │       │   │   ├── availability.tsx
+│    │       │   │   └── CrateNewAvailability.tsx
+│    │       │   │── slice.ts
+│    │       │   └── types.ts
+│    │       ├── choose_your_avatar/
+│    │       │   ├── layouts/
+│    │       │   │   ├── ChooseYourAvatarDesktop.tsx
+│    │       │   │   └── ChooseYourAvatarMobile.tsx
+│    │       │   ├── utils/
+│    │       │   │   └── utils_for_choose_avatar.ts
+│    │       │   └── chooseYourAvatarPage.tsx
+│    │       ├── dashboard/
+│    │       │   ├── components/
+│    │       │   │   ├── PieChartGraphicComponent.tsx
+│    │       │   │   └── SimpleLineChartGraphicComponent.tsx
+│    │       │   ├── pages/
+│    │       │   │   └── dashboard.tsx
+│    │       │   └── types.ts
+│    │       ├── profile/
+│    │       │   ├── components/
+│    │       │   │   └── VerificationEmailModal.tsx
+│    │       │   └── pages/
+│    │       │       ├── EditData.tsx
+│    │       │       ├── EditEmail.tsx
+│    │       │       ├── EmailVerifiedSuccesfully.tsx
+│    │       │       ├── ProfessionalProfile.tsx
+│    │       │       └── ResetPasswordWithLoginPage.tsx
+│    │       ├── services_appointment.ts
+│    │       ├── services_availability.ts
+│    │       ├── services_professional.ts
+│    │       ├── slice.ts
+│    │       └── types.ts
+│    ├── shared/
+│    │   ├── assets/
+│    │   │   └── all_cartoon_avatars.ts
+│    │   ├── components/
+│    │   │   ├── loading/
+│    │   │   │   ├── Loading.tsx
+│    │   │   │   ├── LoadingScreen.tsx
+│    │   │   │   └── slice.ts
+│    │   │   ├── FooterBar.tsx
+│    │   │   ├── loggedInNavBar.tsx
+│    │   │   ├── Logo.tsx
+│    │   │   ├── NavBar.tsx
+│    │   │   ├── notLoggedInNavBar.tsx
+│    │   │   ├── Pagination.tsx
+│    │   │   └── ProfessionalSectionComponent.tsx
+│    │   ├── types/
+│    │   │   └── types.ts
+│    │   ├── ui/      --> Componentes do Shadcn/ui
+│    │   └── utils/
+│    │       ├── PrivateRoutes.tsx
+│    │       ├── utils.ts
+│    │       └── VerifyAuthentication.tsx
+│    └── styles/
+│        ├── font.css
+│        ├── index.css
+│        └── tailwind.css
+├── .dockerignore
+├── .gitignore
+├── components.json
+├── Dockerfile
+├── eslint.config.js
+├── index.html
+├── nginx.conf
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+<br>
+
+## Arquitetura
+
+O Agendify foi desenvolvido seguindo uma arquitetura baseada em features chamada **feature-based architecture**, onde cada domínio da aplicação possui sua própria estrutura isolada.
+
+## Autenticação e Segurança
+
+A autenticação é baseada em JWT, com uso de Access Token e Refresh Token.
+
+<br>
+
+## Infraestrutura
+
+A aplicação roda em um container docker, comunicando-se com o backend por meio de uma Docker Network.
+
+<br>
+
+## Benefícios da Arquitetura
+
+A arquitetura prioriza código limpo e bem organizado, facilitando a manutenção, permitindo a evolução do sistema sem acoplamento excessivo e garantindo uma separação clara de domínios.
+
+<br>
+
+## Pré-requisitos
+
+- **Docker**
+- **Docker Compose**
+
+<br>
+
+## Variáveis de Ambiente (**.env**)
+
+Crie um arquivo **.env** na raiz do projeto:
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+<br>
+
+## Docker
+
+Subir a aplicação
 
 ```bash
-src/
-├── assets/                # Icons, images, and fonts
-├── components/            # Reusable components (buttons, inputs, etc.)
-├── layouts/               # Standard layouts (DashboardLayout, AuthLayout)
-├── css/                   # Complementary styles and Tailwind customizations
-├── feature/               # Access logic and route verification (e.g., logged-in user)
-├── lib/                   # Utility functions (formatters, helpers, validations)
-├── pages/                 # Application pages (Login, Dashboard, Appointments, etc.)
-├── store.ts               # Global Redux Toolkit configuration
-├── index.css              # Main Tailwind CSS stylesheet
-└── main.tsx               # Application entry point
+docker compose up --build
 ```
 
----
+A aplicação ficará disponível em:
 
-## 🔑 Authentication and Route Protection
-
-- Authentication is managed by **AuthContext** (`src/contexts/AuthContext.tsx`).
-- JWT tokens are securely stored (sessionStorage/localStorage).
-- Protected routes use the **`<PrivateRoute />`** component (`src/auth/PrivateRoute.tsx`), which redirects unauthenticated users to the login screen.
-
-Example:
-
-```tsx
-<Route
-  path="/dashboard"
-  element={
-    <PrivateRoute>
-      <Dashboard />
-    </PrivateRoute>
-  }
-/>
 ```
+http://localhost:3000
 
----
-
-## 🔄 Backend Communication
-
-- All HTTP requests use **Axios**, configured in `src/services/api.ts`.
-- Interceptors automatically attach the JWT token.
-- Main routes include:
-
-  - `POST /login` — authentication
-  - `POST /agendar/` — scheduling chat
-  - `POST /agendamentos/confirmar` — appointment confirmation
-  - `GET /agendamentos/` — listing with filters
-
----
-
-## 🧩 Typing
-
-- All reusable types (e.g., `User`, `Appointment`, `ApiResponse`) are located in `src/types/`.
-- Local and specific types are defined within the respective component.
-
----
-
-## 🎨 UI and Styling
-
-- **Tailwind CSS** provides the foundation for fast and responsive styling.
-- **Shadcn/UI** is used for accessible and customizable components (modals, buttons, cards).
-- **Framer Motion** adds micro-animations to screen transitions and interactive elements.
-
----
-
-## 🧠 Coding Best Practices
-
-- Components are **functional and reusable**.
-- Imports follow the `@/` pattern set in `tsconfig.json` (`baseUrl: "./src"`).
-- Shared types and helper functions are kept separate from UI logic.
-
----
-
-## ⚙️ Setup and Execution
-
-### 🧩 Install dependencies
-
-```bash
-npm install
 ```
-
-### ▶️ Run in development mode
-
-```bash
-npm run dev
-```
-
-### 🏗️ Build for production
-
-```bash
-npm run build
-```
-
-### 🔍 Lint and formatting
-
-```bash
-npm run lint
-npm run format
-```
-
----
-
-## 🧪 Tests (optional / future implementation)
-
-- The project is prepared for testing with **Vitest** and **React Testing Library**.
-- Future tests will cover:
-
-  - Authentication hooks
-  - API requests
-  - Critical components (forms, scheduling modal)
-
----
-
-## 📦 Main Dependencies
-
-```json
-"dependencies": {
-  "react": "^19.x",
-  "react-dom": "^19.x",
-  "react-router-dom": "^7.x",
-  "@reduxjs/toolkit": "^2.x",
-  "react-redux": "^9.x",
-  "axios": "^1.x",
-  "tailwindcss": "^4.x",
-  "@tailwindcss/vite": "^4.x",
-  "lucide-react": "^0.5.x",
-  "@radix-ui/react-dialog": "^1.x",
-  "@radix-ui/react-alert-dialog": "^1.x",
-  "@radix-ui/react-checkbox": "^1.x",
-  "@radix-ui/react-select": "^2.x",
-  "@radix-ui/react-popover": "^1.x",
-  "embla-carousel-react": "^8.x",
-  "recharts": "^3.x",
-  "date-fns": "^4.x",
-  "motion": "^12.x",
-  "next-themes": "^0.4.x",
-  "class-variance-authority": "^0.7.x",
-  "clsx": "^2.x",
-  "tailwind-merge": "^3.x",
-  "sonner": "^2.x"
-}
-```
-
----
-
-## 🧰 Development Dependencies
-
-```json
-"devDependencies": {
-  "vite": "^7.x",
-  "@vitejs/plugin-react": "^4.x",
-  "typescript": "^5.x",
-  "@types/react": "^19.x",
-  "@types/react-dom": "^19.x",
-  "@types/node": "^24.x",
-  "eslint": "^9.x",
-  "@eslint/js": "^9.x",
-  "typescript-eslint": "^8.x",
-  "autoprefixer": "^10.x",
-  "postcss": "^8.x",
-  "tw-animate-css": "^1.x"
-}
-```
-
----
-
-## 👨‍💻 Author
-
-**Douglas Phelipe**
-Aspiring Fullstack & Cloud Developer
-📍 Pernambuco, Brazil
-🔗 [LinkedIn](https://linkedin.com/in/douglas-phelipe)

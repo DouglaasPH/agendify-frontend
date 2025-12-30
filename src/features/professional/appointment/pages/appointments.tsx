@@ -19,7 +19,7 @@ import {
 } from "@/shared/utils/utils";
 
 // components
-import TitleAndStatus from "../components/TitleAndStatus";
+import TitleAndStatus from "@/features/professional/appointment/components/TitleAndStatus.tsx";
 import Filters from "../components/Filters";
 import AppointmentSchedule from "../components/AppointmentsSchedule";
 import PaginationComponent from "@/shared/components/Pagination";

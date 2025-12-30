@@ -12,6 +12,7 @@ import type {
   ProfessionalDataToModifyData,
   RegisterData,
   CheckEmailResponse,
+  ProfessionalDataResponse,
 } from "./types";
 import type { Succesfully } from "@/shared/types/types";
 
@@ -164,7 +165,7 @@ export const request_to_confirm_password_modification_of_professional_with_token
 
 export const request_to_get_professional_data_by_chat_code = async (
   chat_code: string
-): Promise<ProfessionalData> => {
+): Promise<ProfessionalDataResponse> => {
   return await api.get(ROUTES.professional.get_data_by_chat_code(chat_code));
 };
 

@@ -35,6 +35,7 @@ function ChatPage() {
         const fetchAPI = await request_to_get_professional_data_by_chat_code(
           chat_code
         );
+        console.log(fetchAPI);
 
         if (fetchAPI.data) {
           setIsValidChatCode(true);

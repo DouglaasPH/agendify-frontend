@@ -24,6 +24,10 @@ export interface ProfessionalData {
   status?: string;
 }
 
+export interface ProfessionalDataResponse {
+  data: ProfessionalData;
+}
+
 export interface ProfessionalDataToModifyData {
   name?: string;
   phone_number?: string;

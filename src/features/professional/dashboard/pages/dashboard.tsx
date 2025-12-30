@@ -94,8 +94,8 @@ function DashboardPage() {
 
   const todaySchedule: TodaySchedule[] = [];
   data.appointments_today?.map((current) => {
-    if (current.availabilities.start_time) {
-      const date = new Date(current.availabilities?.start_time);
+    if (current.availability.start_time) {
+      const date = new Date(current.availability?.start_time);
       const time = date.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -103,7 +103,7 @@ function DashboardPage() {
       });
 
       todaySchedule.push({
-        customer: current.customer,
+        customer: "resolve",
         start_time: time,
         status: current.status,
       });
@@ -158,16 +158,17 @@ function DashboardPage() {
       try {
         const allAppointmentsResponse =
           await request_to_list_appointment_by_professional(access_token, {});
+        console.log(allAppointmentsResponse);
 
         if (allAppointmentsResponse.data.length !== 0) {
           todayAppointments = allAppointmentsResponse.data.filter(
             (appointment: Appointment) =>
-              appointment.availabilities?.date === today
+              appointment.availability?.date === today
           );
           nextAppointment = allAppointmentsResponse.data.filter(
             (appointment: Appointment) => {
-              if (!appointment.availabilities?.date) return false;
-              return new Date(appointment.availabilities.date) > todayDate;
+              if (!appointment.availability?.date) return false;
+              return new Date(appointment.availability.date) > todayDate;
             }
           );
 
@@ -189,9 +190,9 @@ function DashboardPage() {
 
             const appointmentsCount = allAppointmentsResponse.data.filter(
               (appointment: Appointment) => {
-                if (!appointment.availabilities?.start_time) return false;
+                if (!appointment.availability?.start_time) return false;
                 const appointmentDate = new Date(
-                  appointment.availabilities.start_time
+                  appointment.availability.start_time
                 );
 
                 // it only counts if it's within the current week.

@@ -136,27 +136,28 @@ function AppointmentsPage() {
       try {
         const allAppointments =
           await request_to_list_appointment_by_professional(access_token, {});
+        console.log(allAppointments);
 
         allAppointments.data.sort(
           (a, b) =>
-            new Date(b.availabilities.start_time).getTime() -
-            new Date(a.availabilities.start_time).getTime()
+            new Date(b.availability.start_time).getTime() -
+            new Date(a.availability.start_time).getTime()
         );
 
         const data: Appointment_data_for_page[] = [];
 
         allAppointments.data.forEach((appointment) => {
           const transformDate = format_date(
-            appointment.availabilities.start_time
+            appointment.availability.start_time
           );
           const transformStartTime = format_hours(
-            appointment.availabilities.start_time
+            appointment.availability.start_time
           );
           const transformEndTime = format_hours(
-            appointment.availabilities.end_time
+            appointment.availability.end_time
           );
-          const customer_name = appointment.customer;
-          const customer_email = appointment.customer_email;
+          const customer_name = appointment.customer.name;
+          const customer_email = appointment.customer.email;
 
           data.push({
             id: appointment.id,
@@ -167,7 +168,7 @@ function AppointmentsPage() {
               end_time: transformEndTime,
             },
             fourthColumn: {
-              slot_duration: appointment.availabilities.slot_duration_minutes,
+              slot_duration: appointment.availability.slot_duration_minutes,
             },
             fifthColumn: {
               status:
@@ -180,7 +181,8 @@ function AppointmentsPage() {
         setAppointmentsData(data);
         setTableDataToView(data);
       } catch (error) {
-        go_to_error_page(error);
+        console.log(error);
+        //go_to_error_page(error);
       }
     };
     fetchAvailabilities();

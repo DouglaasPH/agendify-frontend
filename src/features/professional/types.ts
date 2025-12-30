@@ -1,3 +1,5 @@
+import type { Appointment } from "./appointment/types";
+
 export interface LoginRequest {
   email: string;
   password: string;
@@ -66,4 +68,8 @@ export interface ProfessionalDataSlice {
   profession: string;
   profile_avatar_id: number;
   chat_code: string;
+}
+
+export interface AppointmentListForProfessional {
+  data: Appointment[];
 }

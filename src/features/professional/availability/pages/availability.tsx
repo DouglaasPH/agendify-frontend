@@ -262,6 +262,7 @@ function AvailabilityPage() {
           (a, b) =>
             new Date(b.start_time).getTime() - new Date(a.start_time).getTime()
         );
+        console.log(allAvailabilities);
 
         const data: Availabilities_data_for_page[] = [];
 
@@ -287,7 +288,7 @@ function AvailabilityPage() {
                 availability.status.slice(1),
             },
             fifthColumn: {
-              customer: customer,
+              customer: customer.name,
             },
           });
         });

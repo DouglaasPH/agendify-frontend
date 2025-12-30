@@ -45,6 +45,31 @@ export interface AvailabilityListData {
   status?: string;
 }
 
+export interface AvailabilityDataForProfessionalList {
+  date: string;
+  end_time: string;
+  id: number;
+  professional_id: number;
+  slot_duration_minutes: number;
+  start_time: string;
+  status: string;
+  appointments: {
+    id: number;
+    professional_id: number;
+    status: string;
+    customer: {
+      email: string;
+      id: number;
+      name: string;
+      status: string;
+    };
+  };
+}
+
+export interface AvailabilityListDataForProfessional {
+  data: AvailabilityDataForProfessionalList[];
+}
+
 export interface AvailabilitiesListResponse {
   data: Availability[];
 }

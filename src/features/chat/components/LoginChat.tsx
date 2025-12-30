@@ -32,13 +32,13 @@ function LoginChat() {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState<null | boolean>(null);
 
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
+  const handleChangeEmail = (input_value: string) => {
+    setEmail(input_value);
 
-    if (e.target.value.length === 0) {
+    if (input_value.length === 0) {
       setIsValidEmail(null);
     } else {
-      const condition = handle_validate_email(e.target.value);
+      const condition = handle_validate_email(input_value);
       setIsValidEmail(condition);
     }
   };
@@ -136,7 +136,9 @@ function LoginChat() {
                   isValidEmail == null || isValidEmail ? null : "border-red-600"
                 }`}
                 value={email}
-                onChange={handleChangeEmail}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleChangeEmail(e.target.value)
+                }
               />
             </div>
           </section>

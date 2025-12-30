@@ -181,8 +181,7 @@ function AppointmentsPage() {
         setAppointmentsData(data);
         setTableDataToView(data);
       } catch (error) {
-        console.log(error);
-        //go_to_error_page(error);
+        go_to_error_page(error);
       }
     };
     fetchAvailabilities();

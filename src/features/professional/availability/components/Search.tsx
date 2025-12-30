@@ -54,11 +54,11 @@ function SearchComponent({
     },
   ];
 
-  const insertSearch = (e) => {
-    if (e.target.value.length === 0) {
+  const insertSearch = (input_value: string) => {
+    if (input_value.length === 0) {
       setTableDataToView(availabilitiesData);
     } else {
-      const newTableDataToView = searchRows(tableDataToView, e.target.value);
+      const newTableDataToView = searchRows(tableDataToView, input_value);
       setTableDataToView(newTableDataToView);
     }
   };
@@ -102,7 +102,9 @@ function SearchComponent({
           <Input
             placeholder="Search by day, time, or booked person..."
             className="bg-gray-100 border-1 pl-12 rounded-xl"
-            onChange={() => insertSearch(event)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              insertSearch(e.target.value)
+            }
           />
           <Search className="absolute top-1/2 left-5 -translate-x-1/2 -translate-y-1/2 size-5 text-gray-400" />
         </motion.div>

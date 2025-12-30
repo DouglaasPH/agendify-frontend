@@ -83,15 +83,18 @@ function EditDataPage() {
   const handleSaveChanges = async () => {
     if (name !== "" && validatePhoneNumber && profession !== "") {
       try {
-        const response = await request_to_modify_data_of_professional(
-          access_token,
-          {
+        await request_to_modify_data_of_professional(access_token, {
+          name,
+          phone_number: phoneNumber,
+          profession,
+        });
+        dispatch(
+          update_professional_data({
             name,
             phone_number: phoneNumber,
             profession,
-          }
+          })
         );
-        dispatch(update_professional_data(response.data));
         navigate("/professional/profile/");
       } catch (error) {
         go_to_error_page(error);

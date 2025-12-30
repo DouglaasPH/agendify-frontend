@@ -19,6 +19,9 @@ import { update_loading } from "../shared/components/loading/slice";
 import { request_to_get_data_by_id_via_access_token_for_professional } from "../features/professional/services_professional";
 import { refresh_token_request } from "../features/professional/auth/services";
 
+// utils
+import { go_to_error_page } from "@/shared/utils/utils";
+
 // Private Routes
 import {
   VerifyAuthentication,
@@ -77,6 +80,7 @@ import AppointmentsPage from "../features/professional/appointment/pages/appoint
 // /features/professional/chat
 import ChatPage from "../features/chat/pages/chat";
 import LoadingScreen from "@/shared/components/loading/LoadingScreen";
+import axios from "axios";
 
 // URLs
 // /terms-of-use
@@ -366,11 +370,13 @@ function App() {
             refreshTokenResponse.data.access_token
           );
         dispatch(update_professional_data(response));
-      } catch (error) {
-        if (error.response.status == 401) {
-          dispatch(reset());
-        } else {
-          window.location.href = `error/${error.repsonse.status}`;
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status == 401) {
+            dispatch(reset());
+          } else {
+            go_to_error_page(error);
+          }
         }
       } finally {
         setLoadingState(false);

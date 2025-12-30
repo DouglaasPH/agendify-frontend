@@ -54,7 +54,9 @@ function SelectDate({
     fetch();
   }, []);
 
-  const handleOnSelectDate = (date) => {
+  const handleOnSelectDate = (date: Date | undefined) => {
+    if (!date) return;
+
     const formatted_date = date.toISOString().split("T")[0];
     const text = format_date(date).date_formatted;
     setNewAppointment({

@@ -11,6 +11,7 @@ import type {
   AvailabilitiesListResponse,
   AvailabilityListData,
   Succesfully,
+  AvailabilityListDataForProfessional,
 } from "@/shared/types/types";
 
 export const request_to_create_availability_by_professional = async (
@@ -77,7 +78,7 @@ export const request_to_delete_availability_by_id_via_professional = async (
 export const request_to_list_availability_for_professional = async (
   access_token: string | null,
   availability_data?: Partial<AvailabilityListData>
-): Promise<AvailabilitiesListResponse> => {
+): Promise<AvailabilityListDataForProfessional> => {
   console.log(access_token);
   return await api.get(ROUTES.availability.list_for_professional, {
     headers: {

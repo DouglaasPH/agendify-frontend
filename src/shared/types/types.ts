@@ -3,7 +3,7 @@ export interface Succesfully {
 }
 export interface Availability {
   id: number;
-  user_id: number;
+  professional_id: number;
   date: string;
   start_time: string;
   end_time: string;
@@ -13,13 +13,12 @@ export interface Availability {
 }
 
 export interface Appointment {
-  user_id: number;
-  availabilities_id: number;
-  customer: string;
+  availability_id: number;
+  customer_id: number;
   id: number;
+  professional_id: number;
   status: string;
-  customer_email: string;
-  availabilities: Availability;
+  availability: Availability;
 }
 
 export interface AppointmentListResponse {

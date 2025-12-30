@@ -20,7 +20,7 @@ export const ROUTES = {
     modify_password_with_login: "/professional/modify-password-with-login",
   },
   customer: {
-    login_with_id: (customer_id: number) => `/customer/login/${customer_id}`,
+    login_with_id: (customer_id: number) => `/customer/${customer_id}`,
     register_or_login: "/customer/",
   },
   availability: {

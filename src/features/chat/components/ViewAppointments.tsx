@@ -75,6 +75,7 @@ function ViewAppointments({
       const fetchAPI = await request_to_list_appointment_by_customer(
         access_token
       );
+      console.log(fetchAPI);
 
       if (fetchAPI.data.length > 0) {
         fetchAPI.data.map((appointment: Appointment) => {
@@ -102,7 +103,7 @@ function ViewAppointments({
                     <Calendar className="size-5 text-blue-600" />
                     <p className="font-semibold text-gray-900 text-md">
                       {
-                        format_date(appointment.availabilities.date)
+                        format_date(appointment.availability.date)
                           .date_formatted
                       }
                     </p>
@@ -110,8 +111,8 @@ function ViewAppointments({
                   <div className="flex flex-row items-center gap-2">
                     <Clock className="size-5 text-purple-600" />
                     <p className="text-sm text-gray-600">
-                      {format_hours(appointment.availabilities.start_time)} -{" "}
-                      {format_hours(appointment.availabilities.end_time)}
+                      {format_hours(appointment.availability.start_time)} -{" "}
+                      {format_hours(appointment.availability.end_time)}
                     </p>
                   </div>
                 </div>
@@ -121,9 +122,9 @@ function ViewAppointments({
                     onClick={() =>
                       handleOnCancelButton(
                         appointment.id,
-                        appointment.availabilities.date,
-                        appointment.availabilities.start_time,
-                        appointment.availabilities.end_time
+                        appointment.availability.date,
+                        appointment.availability.start_time,
+                        appointment.availability.end_time
                       )
                     }
                   >
@@ -156,7 +157,7 @@ function ViewAppointments({
                     <Calendar className="size-5 text-gray-300" />
                     <p className="font-semibold text-gray-400 text-md">
                       {
-                        format_date(appointment.availabilities.date)
+                        format_date(appointment.availability.date)
                           .date_formatted
                       }
                     </p>
@@ -164,8 +165,8 @@ function ViewAppointments({
                   <div className="flex flex-row items-center gap-2">
                     <Clock className="size-5 text-gray-300" />
                     <p className="text-sm text-gray-400">
-                      {format_hours(appointment.availabilities.start_time)} -{" "}
-                      {format_hours(appointment.availabilities.end_time)}
+                      {format_hours(appointment.availability.start_time)} -{" "}
+                      {format_hours(appointment.availability.end_time)}
                     </p>
                   </div>
                 </div>

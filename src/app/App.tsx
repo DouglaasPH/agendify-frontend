@@ -382,7 +382,6 @@ function App() {
   }, []);
 
   if (loadingState) {
-    // ⬅ mostra loading ou nada enquanto a autenticação não termina
     return <LoadingScreen />;
   }
 

@@ -50,6 +50,7 @@ function LoginChat() {
           name,
           email,
         });
+        console.log(fetchAPI);
         localStorage.setItem(
           "customer_id",
           String(fetchAPI.data.customer_data.id)

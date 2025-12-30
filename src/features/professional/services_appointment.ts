@@ -34,8 +34,9 @@ export const request_to_cancel_appointment_by_id_via_customer = async (
   access_token: string | null,
   appointment_id: number
 ): Promise<Succesfully> => {
-  return await api.delete(
+  return await api.put(
     ROUTES.appointment.cancel_by_id_via_customer(appointment_id),
+    {},
     {
       headers: {
         Authorization: `Bearer ${access_token}`,
@@ -63,7 +64,7 @@ export const request_to_cancel_appointment_by_id_via_professional = async (
 export const request_to_list_appointment_by_customer = async (
   access_token: string | null
 ): Promise<AppointmentListResponse> => {
-  return await api.post(ROUTES.appointment.list_for_customer, {
+  return await api.get(ROUTES.appointment.list_for_customer, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${access_token}`,

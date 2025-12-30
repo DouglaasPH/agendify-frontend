@@ -54,13 +54,11 @@ function ChatPage() {
           const fetchAPI = await request_to_login_with_id_for_customer(
             Number(customer_id)
           );
-          localStorage.setItem(
-            "customer_id",
-            String(fetchAPI.data.customer_data.id)
-          );
+
           dispatch(
             update_customer_data({
               access_token: fetchAPI.data.access_token.access_token,
+              is_authenticated: true,
             })
           );
           dispatch(update_customer_data(fetchAPI.data.customer_data));

@@ -7,6 +7,7 @@ function VerifyAuthentication() {
     (state: RootState) => state.professional.is_authenticated
   );
   const loading = useSelector((state: RootState) => state.loading.loading);
+  console.log(is_authenticated);
 
   if (loading) return null;
   return is_authenticated ? <Outlet /> : <Navigate to={"/login"} replace />;
@@ -17,6 +18,7 @@ function VerifyNotAuthentication() {
     (state: RootState) => state.professional.is_authenticated
   );
   const loading = useSelector((state: RootState) => state.loading.loading);
+  console.log(is_authenticated);
 
   if (loading) return null;
   return !is_authenticated ? (

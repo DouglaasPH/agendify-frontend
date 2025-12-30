@@ -92,12 +92,13 @@ export const request_to_list_appointment_by_professional = async (
   access_token: string | null,
   filters: AppointmentListData
 ): Promise<AppointmentListResponse> => {
-  return await api.post(ROUTES.appointment.list_for_professional, {
-    filters,
+  const response = await api.get(ROUTES.appointment.list_for_professional, {
+    params: filters,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${access_token}`,
     },
     withCredentials: true,
   });
+  return response;
 };

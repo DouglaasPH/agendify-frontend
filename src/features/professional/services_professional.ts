@@ -29,12 +29,16 @@ export const request_to_login_for_professional = async (
 
 export const request_to_get_data_by_id_via_access_token_for_professional =
   async (access_token: string | null): Promise<ProfessionalData> => {
-    return await api.get(ROUTES.professional.get_data_by_id_via_access_token, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-      withCredentials: true,
-    });
+    const response = await api.get(
+      ROUTES.professional.get_data_by_id_via_access_token,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response.data;
   };
 
 export const request_to_generate_a_registration_token_for_register_professional =

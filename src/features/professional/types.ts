@@ -12,16 +12,14 @@ export interface LoginResponse {
 }
 
 export interface ProfessionalData {
-  data: {
-    id: number;
-    name: string;
-    email: string;
-    phone_number: string;
-    profession: string;
-    profile_avatar_id: number;
-    chat_code: string;
-    status?: string;
-  };
+  id: number;
+  name: string;
+  email: string;
+  phone_number: string;
+  profession: string;
+  profile_avatar_id: number;
+  chat_code: string;
+  status?: string;
 }
 
 export interface ProfessionalDataToModifyData {

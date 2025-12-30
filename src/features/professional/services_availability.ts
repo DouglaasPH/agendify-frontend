@@ -78,6 +78,7 @@ export const request_to_list_availability_for_professional = async (
   access_token: string | null,
   availability_data?: Partial<AvailabilityListData>
 ): Promise<AvailabilitiesListResponse> => {
+  console.log(access_token);
   return await api.get(ROUTES.availability.list_for_professional, {
     headers: {
       Authorization: `Bearer ${access_token}`,

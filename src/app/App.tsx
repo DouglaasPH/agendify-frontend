@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Redux
 import { useDispatch } from "react-redux";
@@ -76,6 +76,7 @@ import AppointmentsPage from "../features/professional/appointment/pages/appoint
 
 // /features/professional/chat
 import ChatPage from "../features/chat/pages/chat";
+import LoadingScreen from "@/shared/components/loading/LoadingScreen";
 
 // URLs
 // /terms-of-use
@@ -347,6 +348,7 @@ const browserRoutes = createBrowserRouter(
 
 function App() {
   const dispatch = useDispatch();
+  const [loadingState, setLoadingState] = useState(true);
 
   useEffect(() => {
     dispatch(update_loading());
@@ -356,25 +358,33 @@ function App() {
         dispatch(
           update_professional_data({
             access_token: refreshTokenResponse.data.access_token,
+            is_authenticated: true,
           })
         );
         const response =
           await request_to_get_data_by_id_via_access_token_for_professional(
             refreshTokenResponse.data.access_token
           );
-        dispatch(update_professional_data(response.data));
+        dispatch(update_professional_data(response));
       } catch (error) {
         if (error.response.status == 401) {
           dispatch(reset());
         } else {
           window.location.href = `error/${error.repsonse.status}`;
         }
+      } finally {
+        setLoadingState(false);
+        dispatch(update_loading());
       }
     };
 
     refreshAccessToken();
-    dispatch(update_loading());
   }, []);
+
+  if (loadingState) {
+    // ⬅ mostra loading ou nada enquanto a autenticação não termina
+    return <LoadingScreen />;
+  }
 
   return (
     <>

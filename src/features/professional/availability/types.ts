@@ -1,5 +1,5 @@
 export interface AvailabilityCreate {
-  date: Date;
+  date: string;
   start_time: Date;
   end_time: Date;
   slot_duration_minutes: number;

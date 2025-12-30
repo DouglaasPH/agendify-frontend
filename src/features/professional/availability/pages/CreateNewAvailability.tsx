@@ -55,8 +55,10 @@ function CreateNewAvailabilityPage() {
           const slot_duration_minutes =
             (endDateTime.getTime() - startDateTime.getTime()) / 60000;
 
+          const onlyDate = new Date(date).toISOString().split("T")[0];
+
           return {
-            date: startDateTime,
+            date: onlyDate,
             start_time: startDateTime,
             end_time: endDateTime,
             slot_duration_minutes,
@@ -65,6 +67,7 @@ function CreateNewAvailabilityPage() {
       );
 
     for (const request of allRequest) {
+      console.log(request);
       request_to_create_availability_by_professional(access_token, request);
     }
     navigate("/professional/dashboard");

@@ -212,30 +212,27 @@ function DashboardPage() {
           });
 
           setSimpleLineData(updatedData);
-          const allAvailabilitiesResponse =
-            await request_to_list_availability_for_professional(
-              access_token,
-              {}
-            );
-
-          if (allAvailabilitiesResponse.data.length !== 0) {
-            freeSlotsAvailabilities = allAvailabilitiesResponse.data.filter(
-              (availability: Availability) => {
-                if (
-                  availability.status === "uncoupled" &&
-                  new Date(availability.date) >= todayDate
-                )
-                  return availability;
-              }
-            );
-          }
-
-          setData({
-            appointments_today: todayAppointments,
-            next_appointments: nextAppointment,
-            available_slots: freeSlotsAvailabilities,
-          });
         }
+        const allAvailabilitiesResponse =
+          await request_to_list_availability_for_professional(access_token, {});
+
+        if (allAvailabilitiesResponse.data.length !== 0) {
+          freeSlotsAvailabilities = allAvailabilitiesResponse.data.filter(
+            (availability: Availability) => {
+              if (
+                availability.status === "available" &&
+                new Date(availability.date) >= todayDate
+              )
+                return availability;
+            }
+          );
+        }
+
+        setData({
+          appointments_today: todayAppointments,
+          next_appointments: nextAppointment,
+          available_slots: freeSlotsAvailabilities,
+        });
       } catch (error) {
         go_to_error_page(error);
       }

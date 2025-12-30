@@ -23,15 +23,18 @@ import { motion } from "motion/react";
 
 // utils
 import { go_to_error_page } from "@/shared/utils/utils";
+import LoadingScreen from "@/shared/components/loading/LoadingScreen";
 
 function LoginPage() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorApi, setErrorApi] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handle_login = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const login_response = await request_to_login_for_professional({
         email,
@@ -45,26 +48,37 @@ function LoginPage() {
         update_professional_data({
           access_token: login_response.data.access_token,
           is_authenticated: true,
+          chat_code: professional_data_response.chat_code,
+          email: professional_data_response.email,
+          id: Number(professional_data_response.id),
+          name: professional_data_response.name,
+          phone_number: professional_data_response.phone_number,
+          profession: professional_data_response.profession,
+          profile_avatar_id: Number(
+            professional_data_response.profile_avatar_id
+          ),
         })
       );
-      dispatch(update_professional_data(professional_data_response.data));
     } catch (error: any) {
       console.log(error);
       if (
         error.response.status == 400 &&
         (error.response.data.detail === "Invalid email" ||
-          error.response.data.detail === "Invalid password")
+          error.response.data.detail === "invalid password")
       ) {
         setErrorApi(true);
         setTimeout(() => {
           setErrorApi(false);
         }, 3000);
       } else go_to_error_page(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
+      {loading ? <LoadingScreen /> : null}
       {errorApi ? (
         <div className="fixed w-full h-full flex justify-center top-0 pointer-events-none z-99999">
           <div className="w-full max-w-sm mt-4">

@@ -92,7 +92,7 @@ function EditDataPage() {
           }
         );
         dispatch(update_professional_data(response.data));
-        navigate("/user/profile/");
+        navigate("/professional/profile/");
       } catch (error) {
         go_to_error_page(error);
       }
@@ -209,7 +209,7 @@ function EditDataPage() {
           <Button
             className="w-full py-6 md:py-5 rounded-xl text-xl"
             variant="outline"
-            onClick={() => navigate("/user/profile")}
+            onClick={() => navigate("/professional/profile")}
           >
             <ArrowLeft className="size-4" /> Back to Profile
           </Button>

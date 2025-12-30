@@ -139,13 +139,13 @@ function ProfessionalProfilePage() {
           </p>
         </motion.div>
         {/* grid section of account data */}
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center px-5 md:px-100 gap-10">
+        <div className="grid grid-cols-1 xl:grid-cols-2 items-center px-5 md:px-0 gap-10 ">
           {/* Name */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.2, delay: 2 }}
-            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md"
+            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md md:w-lg"
           >
             <div className="grid grid-cols-[12%_85%] justify-between">
               <div className="flex justify-center items-center bg-gradient-to-b from-blue-600 to-blue-700 p-3 rounded-md">
@@ -157,11 +157,11 @@ function ProfessionalProfilePage() {
                   <div>
                     <SquarePen
                       className="size-6 md:size-4.5 cursor-pointer"
-                      onClick={() => navigate("edit/user-data")}
+                      onClick={() => navigate("edit/data")}
                     />
                   </div>
                 </div>
-                <p className="text-xl md:text-2xl text-foreground">
+                <p className="text-xl md:text-2xl text-foreground break-words w-full">
                   {professional_data.name}
                 </p>
               </div>
@@ -173,7 +173,7 @@ function ProfessionalProfilePage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.2, delay: 2 }}
-            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md"
+            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md md:w-lg"
           >
             <div className="grid grid-cols-[12%_83%] justify-between">
               <div className="flex justify-center items-center bg-gradient-to-b from-blue-600 to-blue-700 p-3 rounded-md">
@@ -187,11 +187,11 @@ function ProfessionalProfilePage() {
                   <div>
                     <SquarePen
                       className="size-6 md:size-4.5 cursor-pointer"
-                      onClick={() => navigate("edit/user-data")}
+                      onClick={() => navigate("edit/data")}
                     />
                   </div>
                 </div>
-                <p className="text-xl md:text-2xl text-foreground">
+                <p className="text-xl md:text-2xl text-foreground break-words w-full">
                   {professional_data.profession}
                 </p>
               </div>
@@ -203,7 +203,7 @@ function ProfessionalProfilePage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.2, delay: 2 }}
-            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md"
+            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md md:w-lg"
           >
             <div className="grid grid-cols-[12%_83%] justify-between">
               <div className="flex justify-center items-center bg-gradient-to-b from-blue-600 to-blue-700 p-3 rounded-md">
@@ -217,11 +217,11 @@ function ProfessionalProfilePage() {
                   <div>
                     <SquarePen
                       className="size-6 md:size-4.5 cursor-pointer"
-                      onClick={() => navigate("edit/user-data")}
+                      onClick={() => navigate("edit/data")}
                     />
                   </div>
                 </div>
-                <p className="text-xl md:text-2xl text-foreground">
+                <p className="text-xl md:text-2xl text-foreground break-words w-full">
                   {professional_data.phone_number}
                 </p>
               </div>
@@ -233,7 +233,7 @@ function ProfessionalProfilePage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.2, delay: 2 }}
-            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md"
+            className="bg-gray-300/20 p-5 rounded-2xl hover:shadow-md md:w-lg"
           >
             <div className="grid grid-cols-[12%_83%] justify-between">
               <div className="flex justify-center items-center bg-gradient-to-b from-blue-600 to-blue-700 p-3 rounded-md">
@@ -249,7 +249,7 @@ function ProfessionalProfilePage() {
                     />
                   </div>
                 </div>
-                <p className="text-xl md:text-2xl text-foreground">
+                <p className="text-xl md:text-2xl text-foreground break-words w-full">
                   {professional_data.email}
                 </p>
               </div>
@@ -268,13 +268,13 @@ function ProfessionalProfilePage() {
           <h1 className="max-w-2xl mx-auto bg-clip-text text-center text-4xl md:text-5xl leading-tight">
             Account Security
           </h1>
-          <p className="max-w-xl mx-auto text-gray-600 leading-relaxed text-center text-xl sm:text-base md:text-md px-2 sm:px-4">
+          <p className="max-w-xl mx-auto text-gray-600 leading-relaxed text-center text-xl sm:text-base md:text-md px-2 sm:px-4 break-words w-full">
             Manage your security preferences, such as changing your password or
             permanently deleting your account
           </p>
         </motion.div>
         {/* grid section of account security */}
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center px-5 md:px-100 gap-10">
+        <div className="grid grid-cols-1 xl:grid-cols-2 items-center px-5 sm:px-25 md:px-50 gap-10">
           {/* Password Protection */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

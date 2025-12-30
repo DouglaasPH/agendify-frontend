@@ -32,7 +32,10 @@ import PieChartGraphicComponent from "../components/PieChartGraphicComponent";
 import SimpleLineChartGraphicCompoent from "../components/SimpleLineChartGraphicComponent";
 
 // types
-import type { Appointment, Availability } from "@/shared/types/types";
+import type {
+  Appointment,
+  AvailabilityDataForProfessionalList,
+} from "@/shared/types/types";
 
 // API
 import { request_to_list_appointment_by_professional } from "../../services_appointment";
@@ -43,7 +46,7 @@ import { go_to_error_page } from "@/shared/utils/utils";
 
 interface Data {
   appointments_today: Appointment[] | null;
-  available_slots: Availability[] | null;
+  available_slots: AvailabilityDataForProfessionalList[] | null;
   next_appointments: Appointment[] | null;
 }
 
@@ -150,7 +153,7 @@ function DashboardPage() {
     const fetchAppointments = async () => {
       let todayAppointments: Appointment[] = [];
       let nextAppointment: Appointment[] = [];
-      let freeSlotsAvailabilities: Availability[] = [];
+      let freeSlotsAvailabilities: AvailabilityDataForProfessionalList[] = [];
 
       const today = new Date().toISOString().split("T")[0];
       const todayDate = new Date(today);
@@ -219,7 +222,7 @@ function DashboardPage() {
 
         if (allAvailabilitiesResponse.data.length !== 0) {
           freeSlotsAvailabilities = allAvailabilitiesResponse.data.filter(
-            (availability: Availability) => {
+            (availability: AvailabilityDataForProfessionalList) => {
               if (
                 availability.status === "available" &&
                 new Date(availability.date) >= todayDate

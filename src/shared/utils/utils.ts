@@ -1,3 +1,4 @@
+import axios from "axios";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -89,10 +90,12 @@ export function handle_validate_email(email: string) {
   return state;
 }
 
-export function go_to_error_page(error: any) {
-  if (!error.response) {
-    window.location.href = `/error/${503}`;
-  } else {
-    window.location.href = `/error/${error.response.status}`;
+export function go_to_error_page(error: unknown) {
+  if (axios.isAxiosError(error)) {
+    if (!error.response) {
+      window.location.href = `/error/${503}`;
+    } else {
+      window.location.href = `/error/${error.response.status}`;
+    }
   }
 }

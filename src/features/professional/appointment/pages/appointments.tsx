@@ -19,11 +19,11 @@ import {
 } from "@/shared/utils/utils";
 
 // components
-//import TitleAndStatus from "@/features/professional/appointment/components/TitleAndStatus";
 import Filters from "../components/Filters";
 import AppointmentSchedule from "../components/AppointmentsSchedule";
 import PaginationComponent from "@/shared/components/Pagination";
 import NoAppointmentFound from "../components/NoAppointmentsFound";
+import TitleAndStatus from "../components/TitleAndStatusForAppointment";
 
 // API
 import { request_to_list_appointment_by_professional } from "../../services_appointment";
@@ -198,6 +198,7 @@ function AppointmentsPage() {
     <main className="flex flex-col gap-10 pb-50">
       {/* header section */}
       {/* Title, description and status (confirmed and canceled) */}
+      <TitleAndStatus appointmentsData={appointmentsData} />
 
       {/* main section */}
       <section className="flex flex-col justify-center items-center gap-10 px-10 lg:px-20 w-full">

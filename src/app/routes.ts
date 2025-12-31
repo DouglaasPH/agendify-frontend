@@ -1,5 +1,5 @@
 export const ROUTES = {
-  refresh_token: "/refresh-token",
+  refresh_token: "/refresh-token/",
   professional: {
     check_email: (email: string) => `/professional/check-email/${email}`,
     get_data_by_id_via_access_token: "/professional",
